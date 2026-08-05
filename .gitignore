@@ -1,0 +1,47 @@
+# ==========================================
+# File .gitignore cho dự án Web Học Online Tin THCS
+# ==========================================
+
+# 1. Hệ điều hành & Tập tin tạm hệ thống (OS / System files)
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# 2. Tập tin môi trường & Bảo mật (Environment & Secret files)
+.env
+.env.local
+.env.development
+.env.production
+*.pem
+*.key
+
+# 3. Trình soạn thảo & Cấu hình IDE (IDE / Text Editor settings)
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# 4. Thư viện Node.js & Output Build (Node.js dependencies & Build folders)
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+
+# 5. Cache & Python Bytecode trong các script công cụ (Python cache & temporary files)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+
+# 6. Nhật ký hệ thống (Logs)
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+tmp/
+temp/
