@@ -1,5 +1,6 @@
 /* ============================================================================
-   MINIGAME INTERACTIVE ENGINE (TẦNG NGHIỆP VỤ BACKEND API ENGINE)
+   MINIGAME INTERACTIVE ENGINE (TẦNG NGHIỆP VỤ MINIGAME & GAMIFICATION)
+   Tích hợp âm thanh Web Audio API & Lưu điểm thưởng Supabase
    ============================================================================ */
 
 class MinigameEngine {
@@ -10,7 +11,7 @@ class MinigameEngine {
     this.userAnswers = [];
   }
 
-  // Play sound effect using Web Audio API
+  // Phát hiệu ứng âm thanh bằng Web Audio API
   playSound(type) {
     try {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -35,11 +36,11 @@ class MinigameEngine {
         osc.stop(audioCtx.currentTime + 0.35);
       }
     } catch (e) {
-      console.log('Audio Context not available', e);
+      console.log('Audio Context không khả dụng trên trình duyệt:', e);
     }
   }
 
-  // Start a minigame by Grade
+  // Bắt đầu Minigame theo Khối
   startMinigame(gradeNumber) {
     const topic = AppData.curriculum.find(c => c.grade === gradeNumber);
     if (!topic || !topic.minigame) {
@@ -142,11 +143,15 @@ class MinigameEngine {
     }
   }
 
-  finishMinigame() {
-    // Add XP to user
-    AppData.currentUser.xp += this.score;
-    if (AppData.currentUser.xp >= AppData.currentUser.level * 200) {
-      AppData.currentUser.level += 1;
+  async finishMinigame() {
+    // Cộng điểm XP vào Supabase hoặc Local AppData
+    if (typeof supabaseService !== 'undefined') {
+      await supabaseService.addXp(this.score, `Hoàn thành minigame: ${this.currentMinigame.title}`);
+    } else {
+      AppData.currentUser.xp += this.score;
+      if (AppData.currentUser.xp >= AppData.currentUser.level * 200) {
+        AppData.currentUser.level += 1;
+      }
     }
 
     const modalBody = document.getElementById('app-modal-body');
@@ -158,8 +163,8 @@ class MinigameEngine {
         
         <div style="background: #FEF08A; border: 2px dashed #CA8A04; border-radius: 16px; padding: 16px; margin: 20px 0; color: #713F12;">
           <div style="font-size: 32px;">🛡️</div>
-          <strong style="font-size: 16px;">MỞ KHÓA HUY HIỆU DANG THIẾT!</strong>
-          <p style="font-size: 13px; margin-top: 4px;">Huy hiệu An toàn số đã được thêm vào Hồ sơ cá nhân của em.</p>
+          <strong style="font-size: 16px;">MỞ KHÓA HUY HIỆU DANH DỰ!</strong>
+          <p style="font-size: 13px; margin-top: 4px;">Huy hiệu An toàn số đã được cập nhật vào Hồ sơ cá nhân của em.</p>
         </div>
 
         <button class="btn-primary" onclick="mainController.closeModal(); mainController.updateHeaderProfile();">

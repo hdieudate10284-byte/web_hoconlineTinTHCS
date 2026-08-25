@@ -68,10 +68,22 @@ CREATE TABLE IF NOT EXISTS public.lessons (
     xp_reward INT DEFAULT 50 CHECK (xp_reward >= 0),
     summary TEXT,
     content_body TEXT,
+<<<<<<< HEAD
+=======
+    video_url TEXT,
+    document_url TEXT,
+>>>>>>> 3370f4b (Cập nhật hệ thống Web Học Online Tin THCS: Xây dựng file .gitignore chuẩn, cho phép Giáo viên đăng ký/đăng nhập Tên & Email riêng, phân quyền Admin ô Supabase DB và tự động đồng bộ bài giảng mới lên Cloud Database)
     display_order INT DEFAULT 1,
     created_at TIMESTAMPTZ DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
+<<<<<<< HEAD
+=======
+-- Bổ sung cột nếu đã tạo bảng trước đó:
+ALTER TABLE public.lessons ADD COLUMN IF NOT EXISTS video_url TEXT;
+ALTER TABLE public.lessons ADD COLUMN IF NOT EXISTS document_url TEXT;
+
+>>>>>>> 3370f4b (Cập nhật hệ thống Web Học Online Tin THCS: Xây dựng file .gitignore chuẩn, cho phép Giáo viên đăng ký/đăng nhập Tên & Email riêng, phân quyền Admin ô Supabase DB và tự động đồng bộ bài giảng mới lên Cloud Database)
 -- ============================================================================
 -- TẦNG 3: BẢNG MINIGAME TRẮC NGHIỆM GAMIFICATION (MINIGAMES & QUESTIONS)
 -- ============================================================================
@@ -170,6 +182,10 @@ DROP POLICY IF EXISTS "Public Read Classes" ON public.classes;
 DROP POLICY IF EXISTS "Public Read Users" ON public.users;
 DROP POLICY IF EXISTS "Public Read Curriculum" ON public.curriculum_topics;
 DROP POLICY IF EXISTS "Public Read Lessons" ON public.lessons;
+DROP POLICY IF EXISTS "Public Insert Curriculum" ON public.curriculum_topics;
+DROP POLICY IF EXISTS "Public Update Curriculum" ON public.curriculum_topics;
+DROP POLICY IF EXISTS "Public Insert Lessons" ON public.lessons;
+DROP POLICY IF EXISTS "Public Update Lessons" ON public.lessons;
 DROP POLICY IF EXISTS "Public Read Minigames" ON public.minigames;
 DROP POLICY IF EXISTS "Public Read Questions" ON public.minigame_questions;
 DROP POLICY IF EXISTS "Public Read Submissions" ON public.submissions;
@@ -187,7 +203,11 @@ DROP POLICY IF EXISTS "Public Insert User Badges" ON public.user_badges;
 CREATE POLICY "Public Read Classes" ON public.classes FOR SELECT USING (true);
 CREATE POLICY "Public Read Users" ON public.users FOR SELECT USING (true);
 CREATE POLICY "Public Read Curriculum" ON public.curriculum_topics FOR SELECT USING (true);
+CREATE POLICY "Public Insert Curriculum" ON public.curriculum_topics FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Update Curriculum" ON public.curriculum_topics FOR UPDATE USING (true);
 CREATE POLICY "Public Read Lessons" ON public.lessons FOR SELECT USING (true);
+CREATE POLICY "Public Insert Lessons" ON public.lessons FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Update Lessons" ON public.lessons FOR UPDATE USING (true);
 CREATE POLICY "Public Read Minigames" ON public.minigames FOR SELECT USING (true);
 CREATE POLICY "Public Read Questions" ON public.minigame_questions FOR SELECT USING (true);
 CREATE POLICY "Public Read Submissions" ON public.submissions FOR SELECT USING (true);

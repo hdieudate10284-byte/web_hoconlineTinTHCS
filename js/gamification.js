@@ -1,17 +1,23 @@
 /* ============================================================================
    GAMIFICATION & LEADERBOARD ENGINE (TẦNG NGHIỆP VỤ GAMIFICATION)
+   Tích hợp trực tiếp Bảng xếp hạng từ Supabase
    ============================================================================ */
 
 class GamificationEngine {
-  renderLeaderboardModal() {
+  async renderLeaderboardModal() {
     const modalOverlay = document.getElementById('app-modal-overlay');
     const modalBody = document.getElementById('app-modal-body');
+
+    // Đồng bộ danh sách học sinh xuất sắc từ Supabase
+    if (typeof supabaseService !== 'undefined' && supabaseService.isConnected) {
+      await supabaseService.fetchLeaderboard();
+    }
 
     modalBody.innerHTML = `
       <div style="text-align: center; margin-bottom: 20px;">
         <span class="hero-badge" style="background: #FEF08A; color: #854D0E;">🏆 BẢNG VINH DANH GAMIFICATION</span>
         <h2 style="font-size: 24px; font-weight: 900; color: #1E293B; margin-top: 4px;">Top Học Sinh Xuất Sắc An Toàn Số</h2>
-        <p style="font-size: 13px; color: #64748B;">Điểm thưởng XP & Huy hiệu danh dự đạt được qua các bài học & minigame</p>
+        <p style="font-size: 13px; color: #64748B;">Điểm thưởng XP & Huy hiệu danh dự lưu trữ trực tiếp trên Supabase Database</p>
       </div>
 
       <table class="leaderboard-table">
@@ -47,7 +53,7 @@ class GamificationEngine {
       </table>
 
       <div style="margin-top: 32px;">
-        <h3 style="font-size: 16px; font-weight: 800; color: #1E293B; margin-bottom: 12px;">🎖️ Bộ Bộ Bộ Huy Hiệu Hệ Thống</h3>
+        <h3 style="font-size: 16px; font-weight: 800; color: #1E293B; margin-bottom: 12px;">🎖️ Bộ Huy Hiệu Hệ Thống</h3>
         <div class="badge-collection-grid">
           ${AppData.badgesCatalog.map(b => `
             <div class="badge-item-card" style="${b.unlocked ? 'border-color: #7C3AED; background: #F3E8FF;' : 'opacity: 0.6;'}">

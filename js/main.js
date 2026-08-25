@@ -1,25 +1,58 @@
 /* ============================================================================
    MAIN APPLICATION CONTROLLER (HỆ THỐNG HỌC LIỆU TIN HỌC THCS)
+   Tích hợp Supabase Cloud Database + Gamification + Multi-role Engine + Auth
    ============================================================================ */
 
 class MainController {
-  init() {
+  async init() {
     this.renderGradeCards();
     this.updateHeaderProfile();
     this.setupEventListeners();
+
+    // Khởi động đồng bộ cơ sở dữ liệu Supabase nếu đã có cấu hình
+    if (typeof supabaseService !== 'undefined') {
+      supabaseService.updateConnectionUI();
+      if (supabaseService.isConnected) {
+        await supabaseService.syncAllData();
+      }
+    }
   }
 
-  // Update header profile display
+  // Cập nhật thông tin Profile trên thanh Header
   updateHeaderProfile() {
     const u = AppData.currentUser;
-    document.getElementById('user-display-name').innerText = u.name;
-    document.getElementById('user-display-class').innerText = `${u.class} • Level ${u.level}`;
-    document.getElementById('user-xp-count').innerText = `${u.xp} XP`;
-    document.getElementById('user-avatar-img').src = u.avatar;
-    document.getElementById('role-select-box').value = u.role;
+    const nameEl = document.getElementById('user-display-name');
+    const classEl = document.getElementById('user-display-class');
+    const xpEl = document.getElementById('user-xp-count');
+    const avatarEl = document.getElementById('user-avatar-img');
+    const roleEl = document.getElementById('role-select-box');
+    const btnAuth = document.getElementById('btn-auth-action');
+
+    if (nameEl) nameEl.innerText = u.name;
+    if (classEl) classEl.innerText = `${u.class} • Level ${u.level}`;
+    if (xpEl) xpEl.innerText = `${u.xp} XP`;
+    if (avatarEl) avatarEl.src = u.avatar;
+    if (roleEl) roleEl.value = u.role;
+
+    // Cập nhật nút Đăng Nhập / Đăng Xuất thông minh
+    if (btnAuth) {
+      if (u.username && u.username !== 'guest') {
+        btnAuth.innerHTML = `🚪 Đăng Xuất (${u.username})`;
+        btnAuth.style.background = '#FEE2E2';
+        btnAuth.style.color = '#991B1B';
+        btnAuth.style.borderColor = '#FECACA';
+        btnAuth.onclick = () => authEngine.logout();
+      } else {
+        btnAuth.innerHTML = `🔐 Đăng Nhập / Đăng Ký`;
+        btnAuth.style.background = 'linear-gradient(135deg, #7C3AED, #4F46E5)';
+        btnAuth.style.color = '#FFFFFF';
+        btnAuth.style.borderColor = '#6D28D9';
+        btnAuth.onclick = () => authEngine.renderAuthModal('login');
+      }
+    }
   }
 
-  // Render 4 Grade Cards matching Image 2 Layout
+  // Render 4 Thẻ Khối Lớp 6, 7, 8, 9
   renderGradeCards() {
     const gridContainer = document.getElementById('grade-cards-container');
     if (!gridContainer) return;
@@ -50,7 +83,7 @@ class MainController {
     `).join('');
   }
 
-  // Show detailed lesson modal
+  // Hiển thị chi tiết bài học
   showLessonDetail(gradeId, lessonId) {
     const topic = AppData.curriculum.find(c => c.id === gradeId);
     if (!topic) return;
@@ -71,7 +104,7 @@ class MainController {
 
         <div style="background: #F8FAFC; padding: 20px; border-radius: 16px; border: 1px solid #CBD5E1; margin-bottom: 20px; font-size: 14px; line-height: 1.6; color: #334155;">
           <h4 style="font-weight: 800; color: #1E293B; margin-bottom: 8px;">Nội dung cốt lõi:</h4>
-          <p>${topic.description}</p>
+          <p>${lesson.summary || topic.description}</p>
           <ul style="margin-top: 12px; padding-left: 20px;">
             <li>Nắm vững quy tắc an toàn và đạo đức không gian mạng.</li>
             <li>Thực hành kỹ năng nhận biết và xử lý tình huống thực tế.</li>
@@ -91,31 +124,47 @@ class MainController {
     modalOverlay.classList.add('active');
   }
 
-  completeLesson(title, xp) {
-    AppData.currentUser.xp += xp;
+  // Hoàn thành bài học và cộng điểm XP
+  async completeLesson(title, xp) {
+    if (typeof supabaseService !== 'undefined') {
+      await supabaseService.addXp(xp, `Hoàn thành bài học: ${title}`);
+    } else {
+      AppData.currentUser.xp += xp;
+    }
+
     this.updateHeaderProfile();
     alert(`Chúc mừng! Em đã hoàn thành bài học "${title}" và nhận được +${xp} XP!`);
     this.closeModal();
   }
 
+  // Đóng Modal chung
   closeModal() {
-    document.getElementById('app-modal-overlay').classList.remove('active');
+    const modalOverlay = document.getElementById('app-modal-overlay');
+    if (modalOverlay) {
+      modalOverlay.classList.remove('active');
+    }
   }
 
+  // Thiết lập phím tắt ESC và click ngoài để đóng popup
   setupEventListeners() {
-    // Close modal on click outside
-    const overlay = document.getElementById('app-modal-overlay');
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
         this.closeModal();
       }
     });
+
+    const overlay = document.getElementById('app-modal-overlay');
+    if (overlay) {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          this.closeModal();
+        }
+      });
+    }
   }
 }
 
 const mainController = new MainController();
-
-// Initialize app when DOM loaded
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
   mainController.init();
 });
