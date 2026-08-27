@@ -13,10 +13,10 @@ export const INITIAL_CURRICULUM = [
     symbol: "Aá",
     description: "Quy tắc ứng xử văn minh trên không gian mạng, bảo vệ thông tin cá nhân & phòng chống bắt nạt trực tuyến.",
     lessons: [
-      { id: "l6-1", title: "Quy tắc ứng xử văn minh trên mạng (Netiquette)", duration: "15 phút", xp: 50, summary: "Bộ quy tắc ứng xử tôn trọng, lịch thiệp và không xúc phạm người khác trên mạng xã hội." },
-      { id: "l6-2", title: "Bảo vệ bí mật thông tin cá nhân", duration: "20 phút", xp: 60, summary: "Không tiết lộ số điện thoại, địa chỉ nhà, mật khẩu cho người lạ trên internet." },
-      { id: "l6-3", title: "Nhận diện & Phòng chống Cyberbullying", duration: "25 phút", xp: 80, summary: "Kỹ năng đối phó với hành vi bắt nạt qua mạng và cách tìm kiếm sự trợ giúp từ người lớn." },
-      { id: "l6-4", title: "Phân biệt tin thật & tin giả (Fake News)", duration: "20 phút", xp: 70, summary: "Kiểm chứng nguồn tin, tác giả và ngày xuất bản trước khi chia sẻ thông tin." }
+      { id: "l6-1", title: "Quy tắc ứng xử văn minh trên mạng (Netiquette)", duration: "15 phút", xp: 50, summary: "Bộ quy tắc ứng xử tôn trọng, lịch thiệp và không xúc phạm người khác trên mạng xã hội.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l6-2", title: "Bảo vệ bí mật thông tin cá nhân", duration: "20 phút", xp: 60, summary: "Không tiết lộ số điện thoại, địa chỉ nhà, mật khẩu cho người lạ trên internet.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l6-3", title: "Nhận diện & Phòng chống Cyberbullying", duration: "25 phút", xp: 80, summary: "Kỹ năng đối phó với hành vi bắt nạt qua mạng và cách tìm kiếm sự trợ giúp từ người lớn.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l6-4", title: "Phân biệt tin thật & tin giả (Fake News)", duration: "20 phút", xp: 70, summary: "Kiểm chứng nguồn tin, tác giả và ngày xuất bản trước khi chia sẻ thông tin.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
     minigame: {
       id: "mg-6",
@@ -93,10 +93,10 @@ export const INITIAL_CURRICULUM = [
     symbol: "💡",
     description: "Nhận diện tin nhắn lừa đảo Phishing, nguyên tắc đặt mật khẩu mạnh, 2FA & phòng tránh Virus/Malware.",
     lessons: [
-      { id: "l8-1", title: "Nhận diện chiêu trò lừa đảo giả mạo Phishing", duration: "20 phút", xp: 70, summary: "Phát hiện email giả mạo ngân hàng, đường link độc hại đánh cắp tài khoản." },
-      { id: "l8-2", title: "Tạo lập mật khẩu mạnh & Xác thực 2 lớp (2FA)", duration: "20 phút", xp: 70, summary: "Bí quyết đặt mật khẩu an toàn và bật mã xác thực qua điện thoại (OTP/2FA)." },
-      { id: "l8-3", title: "Phòng tránh Virus, Mã độc & Phần mềm độc hại", duration: "25 phút", xp: 80, summary: "Cài đặt phần mềm diệt virus và không tải file từ các trang web không rõ nguồn gốc." },
-      { id: "l8-4", title: "An toàn khi sử dụng Wi-Fi công cộng", duration: "15 phút", xp: 60, summary: "Tránh giao dịch quan trọng trên mạng Wi-Fi mở tại quán cà phê, nơi công cộng." }
+      { id: "l8-1", title: "Nhận diện chiêu trò lừa đảo giả mạo Phishing", duration: "20 phút", xp: 70, summary: "Phát hiện email giả mạo ngân hàng, đường link độc hại đánh cắp tài khoản.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l8-2", title: "Tạo lập mật khẩu mạnh & Xác thực 2 lớp (2FA)", duration: "20 phút", xp: 70, summary: "Bí quyết đặt mật khẩu an toàn và bật mã xác thực qua điện thoại (OTP/2FA).", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l8-3", title: "Phòng tránh Virus, Mã độc & Phần mềm độc hại", duration: "25 phút", xp: 80, summary: "Cài đặt phần mềm diệt virus và không tải file từ các trang web không rõ nguồn gốc.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l8-4", title: "An toàn khi sử dụng Wi-Fi công cộng", duration: "15 phút", xp: 60, summary: "Tránh giao dịch quan trọng trên mạng Wi-Fi mở tại quán cà phê, nơi công cộng.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
     minigame: {
       id: "mg-8",
@@ -127,10 +127,10 @@ export const INITIAL_CURRICULUM = [
     symbol: "🎓",
     description: "Luật An ninh mạng 2018, bảo vệ dữ liệu cá nhân, mã hóa dữ liệu & trách nhiệm của công dân số.",
     lessons: [
-      { id: "l9-1", title: "Nội dung cơ bản Luật An ninh mạng 2018", duration: "25 phút", xp: 80, summary: "Các hành vi bị nghiêm cấm trên không gian mạng và chế tài xử phạt theo pháp luật Việt Nam." },
-      { id: "l9-2", title: "Bảo vệ dữ liệu cá nhân & Quyền riêng tư số", duration: "20 phút", xp: 70, summary: "Quy định bảo vệ dữ liệu cá nhân theo Nghị định 13/2023/NĐ-CP." },
-      { id: "l9-3", title: "Mã hóa dữ liệu & An toàn lưu trữ Đám mây", duration: "25 phút", xp: 80, summary: "Ứng dụng công nghệ mã hóa đầu cuối và sao lưu dữ liệu an toàn trên Google Drive / OneDrive." },
-      { id: "l9-4", title: "Trách nhiệm công dân trong kỷ nguyên số", duration: "20 phút", xp: 70, summary: "Xây dựng môi trường mạng lành mạnh, chia sẻ kiến thức tích cực cho cộng đồng." }
+      { id: "l9-1", title: "Nội dung cơ bản Luật An ninh mạng 2018", duration: "25 phút", xp: 80, summary: "Các hành vi bị nghiêm cấm trên không gian mạng và chế tài xử phạt theo pháp luật Việt Nam.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l9-2", title: "Bảo vệ dữ liệu cá nhân & Quyền riêng tư số", duration: "20 phút", xp: 70, summary: "Quy định bảo vệ dữ liệu cá nhân theo Nghị định 13/2023/NĐ-CP.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l9-3", title: "Mã hóa dữ liệu & An toàn lưu trữ Đám mây", duration: "25 phút", xp: 80, summary: "Ứng dụng công nghệ mã hóa đầu cuối và sao lưu dữ liệu an toàn trên Google Drive / OneDrive.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l9-4", title: "Trách nhiệm công dân trong kỷ nguyên số", duration: "20 phút", xp: 70, summary: "Xây dựng môi trường mạng lành mạnh, chia sẻ kiến thức tích cực cho cộng đồng.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
     minigame: {
       id: "mg-9",

@@ -44,16 +44,16 @@ export const GalleryModal = ({ isOpen, onClose }) => {
         <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
           <div>
             <span className="hero-badge" style={{ background: '#EDE9FE', color: '#7C3AED' }}>
-              🖼️ TRIỂN LÃM SẢN PHẨM HỌC SINH
+              📢 HÌNH ẢNH TUYÊN TRUYỀN &amp; TRIỂN LÃM AN TOÀN SỐ
             </span>
             <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1E293B', marginTop: '4px' }}>
-              Không gian Trưng bày & Duyệt Bài Nộp
+              Góc Tuyên Truyền Văn Hóa Mạng &amp; Duyệt Bài Nộp
             </h2>
           </div>
           <div>
             {!isTeacherOrAdmin ? (
               <button className="btn-primary" onClick={() => setShowForm(!showForm)}>
-                {showForm ? 'Đóng Form' : '📤 Nộp Sản Phẩm Mới'}
+                {showForm ? 'Đóng Form' : '📤 Nộp Poster Tuyên Truyền Mới'}
               </button>
             ) : (
               <span className="hero-badge" style={{ background: '#FEF3C7', color: '#92400E' }}>

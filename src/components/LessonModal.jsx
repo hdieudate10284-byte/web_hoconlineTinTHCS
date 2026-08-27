@@ -44,13 +44,23 @@ const getEmbedVideoUrl = (url) => {
   return null;
 };
 
-export const LessonModal = ({ isOpen, onClose, topic, lesson }) => {
+export const LessonModal = ({ isOpen, onClose, topic, lesson, onOpenChatbot }) => {
   const { addXP, currentUser } = useAuth();
-  const { recordLessonView } = useData();
+  const { recordLessonView, updateLessonLink } = useData();
+
+  const isTeacherOrAdmin = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
+
+  const [isEditingLink, setIsEditingLink] = React.useState(false);
+  const [editVideoUrl, setEditVideoUrl] = React.useState('');
+  const [editDocUrl, setEditDocUrl] = React.useState('');
+  const [isSaving, setIsSaving] = React.useState(false);
 
   useEffect(() => {
     if (isOpen && topic && lesson) {
       recordLessonView(lesson.id, topic.grade, lesson.title, currentUser?.class, currentUser?.name);
+      setEditVideoUrl(lesson.videoUrl || lesson.video_url || lesson.video || lesson.url || lesson.link || '');
+      setEditDocUrl(lesson.documentUrl || lesson.document_url || lesson.docUrl || lesson.doc_url || lesson.document || '');
+      setIsEditingLink(false);
     }
   }, [isOpen, topic, lesson, currentUser?.class, currentUser?.name]);
 
@@ -75,6 +85,21 @@ export const LessonModal = ({ isOpen, onClose, topic, lesson }) => {
 
   const embedVideoUrl = getEmbedVideoUrl(rawVideoUrl);
 
+  const handleSaveLinks = async (e) => {
+    e.preventDefault();
+    setIsSaving(true);
+    const res = await updateLessonLink({
+      lessonId: lesson.id,
+      videoUrl: editVideoUrl,
+      documentUrl: editDocUrl
+    });
+    setIsSaving(false);
+    if (res.success) {
+      setIsEditingLink(false);
+      alert(`✅ Đã cập nhật thành công link bài học cho bài "${lesson.title}"!`);
+    }
+  };
+
   const handleComplete = () => {
     addXP(lesson.xp || 50, `Hoàn thành bài học: ${lesson.title}`);
     alert(`🎉 Chúc mừng! Em đã hoàn thành bài học "${lesson.title}" và nhận được +${lesson.xp || 50} XP!`);
@@ -83,19 +108,86 @@ export const LessonModal = ({ isOpen, onClose, topic, lesson }) => {
 
   return (
     <div className="modal-overlay" onClick={(e) => e.target.className === 'modal-overlay' && onClose()}>
-      <div className="modal-container" style={{ maxWidth: '700px', padding: '28px' }}>
+      <div className="modal-container" style={{ maxWidth: '720px', padding: '28px' }}>
         <button className="modal-close-btn" onClick={onClose}>✕</button>
 
         <div>
-          <span className="hero-badge" style={{ background: topic.color || '#7C3AED', color: 'white' }}>
-            📘 BÀI HỌC KHỐI {topic.grade}
-          </span>
-          <h2 style={{ fontSize: '24px', fontWeight: 900, color: '#1E293B', marginTop: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+            <span className="hero-badge" style={{ background: topic.color || '#7C3AED', color: 'white' }}>
+              📘 BÀI HỌC KHỐI {topic.grade}
+            </span>
+
+            {/* Nút dành cho Giáo viên để bật form sửa link */}
+            {isTeacherOrAdmin && (
+              <button 
+                onClick={() => setIsEditingLink(!isEditingLink)}
+                style={{ 
+                  background: isEditingLink ? '#EF4444' : '#FEF3C7', 
+                  color: isEditingLink ? 'white' : '#92400E',
+                  border: '1px solid #FCD34D',
+                  padding: '6px 14px',
+                  borderRadius: '10px',
+                  fontSize: '12.5px',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                {isEditingLink ? '✖️ Hủy chỉnh sửa' : '👨‍🏫 ✏️ Sửa / Cập nhật Link Bài Học'}
+              </button>
+            )}
+          </div>
+
+          <h2 style={{ fontSize: '24px', fontWeight: 900, color: '#1E293B', marginTop: '10px' }}>
             {lesson.title}
           </h2>
           <p style={{ fontSize: '13px', color: '#64748B', marginBottom: '16px' }}>
             ⏱️ Thời lượng: {lesson.duration || '20 phút'} | 🎁 Thưởng: +{lesson.xp || 50} XP
           </p>
+
+          {/* FORM CHỈNH SỬA DÀNH CHO GIÁO VIÊN */}
+          {isEditingLink && (
+            <form onSubmit={handleSaveLinks} style={{ background: '#FFFBEB', border: '2px dashed #F59E0B', padding: '18px', borderRadius: '16px', marginBottom: '20px' }}>
+              <h4 style={{ fontSize: '14px', fontWeight: 800, color: '#92400E', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                👨‍🏫 DÀNH CHO GIÁO VIÊN: CẬP NHẬT ĐƯỜNG DẪN BÀI HỌC
+              </h4>
+
+              <div style={{ marginBottom: '12px' }}>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 700, color: '#451A03', marginBottom: '4px' }}>
+                  🎬 Link Video Bài Giảng (YouTube / Google Drive Video):
+                </label>
+                <input 
+                  type="url"
+                  value={editVideoUrl}
+                  onChange={(e) => setEditVideoUrl(e.target.value)}
+                  placeholder="https://www.youtube.com/watch?v=... hoặc link Google Drive..."
+                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #FCD34D', fontSize: '13px', outline: 'none' }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 700, color: '#451A03', marginBottom: '4px' }}>
+                  📂 Link Slide Tài Liệu / Bài Tập (Google Drive / OneDrive):
+                </label>
+                <input 
+                  type="url"
+                  value={editDocUrl}
+                  onChange={(e) => setEditDocUrl(e.target.value)}
+                  placeholder="https://drive.google.com/file/d/..."
+                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #FCD34D', fontSize: '13px', outline: 'none' }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+                <button type="button" className="btn-secondary" style={{ padding: '8px 14px', fontSize: '12.5px' }} onClick={() => setIsEditingLink(false)}>Hủy</button>
+                <button type="submit" disabled={isSaving} className="btn-primary" style={{ background: '#D97706', padding: '8px 18px', fontSize: '12.5px', fontWeight: 800 }}>
+                  {isSaving ? '⏳ Đang lưu...' : '💾 Lưu Link Bài Học'}
+                </button>
+              </div>
+            </form>
+          )}
 
           {/* KHUNG PHÁT VIDEO BÀI GIẢNG TRỰC TIẾP */}
           {rawVideoUrl ? (
@@ -106,7 +198,7 @@ export const LessonModal = ({ isOpen, onClose, topic, lesson }) => {
                     src={embedVideoUrl}
                     title={lesson.title}
                     width="100%"
-                    height="360"
+                    height="380"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
@@ -136,14 +228,36 @@ export const LessonModal = ({ isOpen, onClose, topic, lesson }) => {
               </div>
             </div>
           ) : (
-            <div style={{ marginBottom: '18px', background: '#F1F5F9', border: '1px solid #CBD5E1', padding: '16px', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ fontSize: '28px' }}>🎬</span>
-              <div>
-                <h5 style={{ fontWeight: 800, color: '#1E293B', fontSize: '14px' }}>Video Bài Giảng Trực Quan</h5>
-                <p style={{ fontSize: '12.5px', color: '#64748B' }}>
-                  Giáo viên có thể dán link YouTube hoặc Google Drive Video khi biên soạn bài giảng mới.
-                </p>
+            <div style={{ marginBottom: '18px', background: '#F8FAFC', border: '2px dashed #CBD5E1', padding: '20px', borderRadius: '16px', textContent: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: isTeacherOrAdmin ? '12px' : '0' }}>
+                <span style={{ fontSize: '32px' }}>🎬</span>
+                <div>
+                  <h5 style={{ fontWeight: 800, color: '#1E293B', fontSize: '14.5px' }}>Video Bài Giảng Trực Quan</h5>
+                  <p style={{ fontSize: '12.5px', color: '#64748B', marginTop: '2px' }}>
+                    Giáo viên có thể dán link YouTube hoặc Google Drive Video để học sinh theo dõi trực tiếp.
+                  </p>
+                </div>
               </div>
+
+              {isTeacherOrAdmin && !isEditingLink && (
+                <button 
+                  onClick={() => setIsEditingLink(true)}
+                  style={{ 
+                    marginTop: '8px',
+                    width: '100%',
+                    padding: '10px',
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #7C3AED, #4F46E5)',
+                    color: 'white',
+                    fontWeight: 800,
+                    fontSize: '13px',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ➕ Dán Link Video YouTube / Google Drive Ngay Tại Đây
+                </button>
+              )}
             </div>
           )}
 
@@ -184,11 +298,23 @@ export const LessonModal = ({ isOpen, onClose, topic, lesson }) => {
             </ul>
           </div>
 
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
-            <button className="btn-secondary" onClick={onClose}>Đóng</button>
-            <button className="btn-primary" onClick={handleComplete}>
-              ✅ Đã Học Xong (+{lesson.xp || 50} XP)
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+            <button 
+              className="btn-secondary" 
+              style={{ background: '#F3E8FF', color: '#6B21A8', borderColor: '#E9D5FF', fontWeight: 800, cursor: 'pointer' }}
+              onClick={() => {
+                onClose();
+                if (onOpenChatbot) onOpenChatbot();
+              }}
+            >
+              💬 Có Thắc Mắc Bài Học? Hỏi Trợ Lý AI ↗
             </button>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button className="btn-secondary" onClick={onClose}>Đóng</button>
+              <button className="btn-primary" onClick={handleComplete}>
+                ✅ Đã Học Xong (+{lesson.xp || 50} XP)
+              </button>
+            </div>
           </div>
         </div>
       </div>

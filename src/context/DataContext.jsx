@@ -508,6 +508,54 @@ export const DataProvider = ({ children }) => {
     return { success: true, message: `🎉 Đã thêm thành công bài giảng "${title}" vào Khối ${gradeNum}\n\n${notice}` };
   };
 
+  // Cập nhật đường dẫn Video & Tài liệu cho Bài học có sẵn (Dành cho Giáo viên)
+  const updateLessonLink = async ({ lessonId, videoUrl, documentUrl, summary }) => {
+    let updatedLessonObj = null;
+
+    setCurriculum(prev => {
+      const updated = prev.map(topic => {
+        const updatedLessons = topic.lessons.map(l => {
+          if (l.id === lessonId) {
+            updatedLessonObj = {
+              ...l,
+              videoUrl: videoUrl !== undefined ? videoUrl.trim() : l.videoUrl || '',
+              documentUrl: documentUrl !== undefined ? documentUrl.trim() : l.documentUrl || '',
+              summary: summary !== undefined ? summary.trim() : l.summary
+            };
+            return updatedLessonObj;
+          }
+          return l;
+        });
+        return { ...topic, lessons: updatedLessons };
+      });
+
+      try {
+        localStorage.setItem('thcs_curriculum', JSON.stringify(updated));
+      } catch (e) {
+        console.warn('Lỗi lưu curriculum vào localStorage:', e);
+      }
+      return updated;
+    });
+
+    if (supabaseService.isConnected && supabaseService.client) {
+      try {
+        const updateData = {};
+        if (videoUrl !== undefined) updateData.video_url = videoUrl.trim();
+        if (documentUrl !== undefined) updateData.document_url = documentUrl.trim();
+        if (summary !== undefined) updateData.summary = summary.trim();
+
+        await supabaseService.client
+          .from('lessons')
+          .update(updateData)
+          .eq('lesson_code', lessonId);
+      } catch (err) {
+        console.warn('Lỗi cập nhật link bài học trên Supabase:', err);
+      }
+    }
+
+    return { success: true, updatedLesson: updatedLessonObj };
+  };
+
   return (
     <DataContext.Provider value={{
       curriculum,
@@ -523,7 +571,8 @@ export const DataProvider = ({ children }) => {
       likeSubmission,
       recordLessonView,
       recordMinigameView,
-      addLesson
+      addLesson,
+      updateLessonLink
     }}>
       {children}
     </DataContext.Provider>

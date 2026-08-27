@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-export const QuickNav = ({ onStartMinigame, onOpenLeaderboard }) => {
+export const QuickNav = ({ onStartMinigame, onOpenLeaderboard, onOpenGallery, onOpenChatbot }) => {
   return (
     <nav className="quick-nav-bar">
       <div className="quick-nav-item" onClick={() => document.getElementById('side-about-widget')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -27,10 +27,17 @@ export const QuickNav = ({ onStartMinigame, onOpenLeaderboard }) => {
         <div className="quick-nav-icon qnav-pink">🎓</div>
         <span className="quick-nav-label">Khối 9</span>
       </div>
-      <div className="quick-nav-item" onClick={onOpenLeaderboard}>
-        <div className="quick-nav-icon qnav-indigo">❓</div>
-        <span className="quick-nav-label">Thắc Mắc</span>
-      </div>
+      <a 
+        href="https://home.aiphocap.vn/chat/cutebot-xu-ly-tinh-huong-2358" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="quick-nav-item"
+        style={{ textDecoration: 'none', color: 'inherit' }}
+        onClick={() => onOpenChatbot && onOpenChatbot()}
+      >
+        <div className="quick-nav-icon qnav-indigo">💬</div>
+        <span className="quick-nav-label">Giải Đáp Thắc Mắc &amp; Trợ Giúp</span>
+      </a>
     </nav>
   );
 };

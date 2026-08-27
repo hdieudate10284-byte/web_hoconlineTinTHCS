@@ -6,7 +6,7 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';
 
-export const HeaderProfile = ({ onOpenAuth, onOpenLeaderboard, onOpenGallery, onOpenSql, onOpenSupabase, onOpenAnalytics, onOpenAddLesson }) => {
+export const HeaderProfile = ({ onOpenAuth, onOpenLeaderboard, onOpenGallery, onOpenSql, onOpenSupabase, onOpenAnalytics, onOpenAddLesson, onOpenChatbot }) => {
   const { currentUser, logout, switchRole } = useAuth();
   const { isDbConnected } = useData();
 
@@ -15,7 +15,10 @@ export const HeaderProfile = ({ onOpenAuth, onOpenLeaderboard, onOpenGallery, on
 
   const handleAnalyticsClick = () => {
     if (!isTeacherOrAdmin) {
-      alert('🔒 QUYỀN TRUY CẬP BỊ TỪ CHỐI!\n\nChức năng Xem Thống kê & Xuất Excel dành riêng cho Giáo viên & Admin QTV.\n\nHọc sinh có thể xem bài giảng, giải minigame và nộp bài tập!');
+      if (window.confirm('🔒 Chức năng Báo cáo Thống kê Lượng tương tác & Xuất file Excel dành cho vai trò Giáo viên / Admin.\n\nBạn có muốn tự động chuyển sang vai trò "👨‍🏫 Giáo viên" để xem báo cáo thống kê ngay bây giờ không?')) {
+        switchRole('teacher');
+        onOpenAnalytics();
+      }
       return;
     }
     onOpenAnalytics();
@@ -117,6 +120,29 @@ export const HeaderProfile = ({ onOpenAuth, onOpenLeaderboard, onOpenGallery, on
         >
           {isTeacherOrAdmin ? '📊 Thống Kê & Excel (Giáo Viên)' : '🔒 Thống Kê (Giáo Viên)'}
         </button>
+
+        {/* Nút GIẢI ĐÁP THẮC MẮC & TRỢ GIÚP (Cutebot AI) */}
+        <a 
+          href="https://home.aiphocap.vn/chat/cutebot-xu-ly-tinh-huong-2358" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="btn-primary" 
+          style={{ 
+            background: 'linear-gradient(135deg, #4F46E5, #7C3AED)', 
+            color: 'white',
+            borderColor: '#4338CA', 
+            fontWeight: 900, 
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(79, 70, 229, 0.35)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            textDecoration: 'none'
+          }}
+          onClick={() => onOpenChatbot && onOpenChatbot()}
+        >
+          <span>💬</span> GIẢI ĐÁP THẮC MẮC &amp; TRỢ GIÚP
+        </a>
 
         {/* Các nút hành động */}
         <button className="btn-primary" onClick={onOpenLeaderboard}>
