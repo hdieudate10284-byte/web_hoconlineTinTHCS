@@ -127,10 +127,12 @@ export const DataProvider = ({ children }) => {
               }
             });
 
+            const topicTitle = t.grade_level === 6 ? 'Chủ đề D: An toàn thông tin internet' : t.title;
+
             return {
               id: `grade-${t.grade_level}`,
               grade: t.grade_level,
-              title: t.title,
+              title: topicTitle,
               badgeText: t.badge_text || `CHỦ ĐỀ KHỐI ${t.grade_level}`,
               themeClass: t.theme_class || `card-grade-${t.grade_level}`,
               color: t.theme_color || '#7C3AED',
@@ -141,6 +143,14 @@ export const DataProvider = ({ children }) => {
             };
           });
           setCurriculum(merged);
+
+          // Tự động cập nhật tên tiêu đề Khối 6 trên Supabase Cloud Database nếu cần
+          supabaseService.client
+            .from('curriculum_topics')
+            .update({ title: 'Chủ đề D: An toàn thông tin internet' })
+            .eq('grade_level', 6)
+            .then(() => {})
+            .catch(() => {});
         }
 
         // 2. Tải Bài nộp học sinh
