@@ -6,7 +6,7 @@ export const INITIAL_CURRICULUM = [
   {
     id: "grade-6",
     grade: 6,
-    title: "Chủ đề D: An toàn thông tin internet",
+    title: "An toàn thông tin trên internet",
     badgeText: "CHỦ ĐỀ KHỐI 6",
     themeClass: "card-grade-6",
     color: "#7C3AED",

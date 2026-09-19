@@ -33,7 +33,7 @@ export const DataProvider = ({ children }) => {
               );
               return {
                 ...c,
-                title: 'Chủ đề D: An toàn thông tin internet',
+                title: 'An toàn thông tin trên internet',
                 lessons: [...standardG6, ...extraLessons]
               };
             }
@@ -132,7 +132,7 @@ export const DataProvider = ({ children }) => {
               }
             });
 
-            const topicTitle = t.grade_level === 6 ? 'Chủ đề D: An toàn thông tin internet' : t.title;
+            const topicTitle = t.grade_level === 6 ? 'An toàn thông tin trên internet' : t.title;
 
             let cleanLessons = combinedLessons.length > 0 ? combinedLessons : localLessons;
 
@@ -188,7 +188,7 @@ export const DataProvider = ({ children }) => {
 
           supabaseService.client
             .from('curriculum_topics')
-            .update({ title: 'Chủ đề D: An toàn thông tin internet' })
+            .update({ title: 'An toàn thông tin trên internet' })
             .eq('grade_level', 6)
             .then(() => {})
             .catch(() => {});
@@ -501,7 +501,7 @@ export const DataProvider = ({ children }) => {
       try {
         // 1. Tự động kiểm tra/khởi tạo chủ đề khối trong curriculum_topics để tránh lỗi Foreign Key
         const topicTitles = {
-          6: 'Chủ đề D: An toàn thông tin internet',
+          6: 'An toàn thông tin trên internet',
           7: 'Chủ đề D: Ứng xử trên mạng và An toàn thông tin',
           8: 'Chủ đề D: Đạo đức, pháp luật và văn hóa trong môi trường số',
           9: 'Chủ đề D: Tác quyền, an toàn thông tin và văn hóa số'
