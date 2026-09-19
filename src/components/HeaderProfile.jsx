@@ -65,23 +65,25 @@ export const HeaderProfile = ({ onOpenAuth, onOpenLeaderboard, onOpenGallery, on
           </button>
         )}
 
-        {/* Trạng thái Supabase Cloud */}
-        <span 
-          id="supabase-status-pill" 
-          className="hero-badge" 
-          style={{ 
-            fontSize: '11px', 
-            padding: '6px 12px', 
-            cursor: 'pointer', 
-            borderRadius: '999px',
-            background: isDbConnected ? '#DCFCE7' : '#FEF3C7',
-            color: isDbConnected ? '#15803D' : '#92400E',
-            borderColor: isDbConnected ? '#86EFAC' : '#FCD34D'
-          }} 
-          onClick={handleSupabaseClick}
-        >
-          {isDbConnected ? '🟢 Supabase: Đã kết nối' : '⚡ Supabase DB (Cấu hình)'}
-        </span>
+        {/* Trạng thái Supabase Cloud (Chỉ hiển thị cho Admin QTV) */}
+        {isAdmin && (
+          <span 
+            id="supabase-status-pill" 
+            className="hero-badge" 
+            style={{ 
+              fontSize: '11px', 
+              padding: '6px 12px', 
+              cursor: 'pointer', 
+              borderRadius: '999px',
+              background: isDbConnected ? '#DCFCE7' : '#FEF3C7',
+              color: isDbConnected ? '#15803D' : '#92400E',
+              borderColor: isDbConnected ? '#86EFAC' : '#FCD34D'
+            }} 
+            onClick={handleSupabaseClick}
+          >
+            {isDbConnected ? '🟢 Supabase: Đã kết nối' : '⚡ Supabase DB (Cấu hình)'}
+          </span>
+        )}
 
         {/* Chuyển Đổi Vai trò */}
         <select 
@@ -151,9 +153,13 @@ export const HeaderProfile = ({ onOpenAuth, onOpenLeaderboard, onOpenGallery, on
         <button className="btn-secondary" onClick={onOpenGallery}>
           🖼️ Triển Lãm ({isTeacherOrAdmin ? 'Duyệt Bài' : 'Nộp Bài'})
         </button>
-        <button className="btn-secondary" onClick={onOpenSql}>
-          🗄️ SQL DB Schema
-        </button>
+
+        {/* Nút SQL DB Schema (Chỉ hiển thị cho Admin QTV) */}
+        {isAdmin && (
+          <button className="btn-secondary" onClick={onOpenSql}>
+            🗄️ SQL DB Schema
+          </button>
+        )}
       </div>
     </section>
   );
