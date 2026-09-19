@@ -467,13 +467,11 @@ export const AuthModal = ({ isOpen, onClose, initialTab = 'login' }) => {
               <div style={{ fontSize: '12px', fontWeight: 800, color: '#1E293B', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span>💡 Bấm 1 chạm thử nhanh tài khoản mẫu (Pass: 123456):</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '6px' }}>
                 <button type="button" className="btn-secondary" style={{ fontSize: '11px', padding: '6px', fontWeight: 700 }} onClick={() => fillQuickLogin('hocsinh6', '123456', '6/1')}>🎓 Lớp 6/1</button>
                 <button type="button" className="btn-secondary" style={{ fontSize: '11px', padding: '6px', fontWeight: 700 }} onClick={() => fillQuickLogin('hocsinh7', '123456', '7/1')}>🎓 Lớp 7/1</button>
                 <button type="button" className="btn-secondary" style={{ fontSize: '11px', padding: '6px', fontWeight: 700 }} onClick={() => fillQuickLogin('hocsinh8', '123456', '8/1')}>🎓 Lớp 8/1</button>
                 <button type="button" className="btn-secondary" style={{ fontSize: '11px', padding: '6px', fontWeight: 700 }} onClick={() => fillQuickLogin('hocsinh9', '123456', '9/1')}>🎓 Lớp 9/1</button>
-                <button type="button" className="btn-secondary" style={{ fontSize: '11px', padding: '6px', fontWeight: 700, background: '#FEF3C7', color: '#92400E', borderColor: '#FDE68A' }} title="Email: hdieudate10284@gmail.com" onClick={() => fillQuickLogin('hdieudate10284@gmail.com', '123456', 'Giáo viên')}>👩‍🏫 Cô Huyền Diệu (Mail GV)</button>
-                <button type="button" className="btn-secondary" style={{ fontSize: '11px', padding: '6px', fontWeight: 700, background: '#EDE9FE', color: '#5B21B6', borderColor: '#DDD6FE' }} title="Email: hdieudate10284@gmail.com" onClick={() => fillQuickLogin('hdieudate10284@gmail.com', '123456', 'QTV')}>⚙️ Admin (Mail GV)</button>
               </div>
             </div>
           </form>
