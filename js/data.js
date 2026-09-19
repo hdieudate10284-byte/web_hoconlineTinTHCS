@@ -30,8 +30,7 @@ const AppData = {
       lessons: [
         { id: "l6-1", title: "Quy tắc ứng xử văn minh trên mạng (Netiquette)", duration: "15 phút", xp: 50 },
         { id: "l6-2", title: "Bảo vệ bí mật thông tin cá nhân", duration: "20 phút", xp: 60 },
-        { id: "l6-3", title: "Nhận diện & Phòng chống Cyberbullying", duration: "25 phút", xp: 80 },
-        { id: "l6-4", title: "Phân biệt tin thật & tin giả (Fake News)", duration: "20 phút", xp: 70 }
+        { id: "l6-3", title: "Nhận diện & Phòng chống Cyberbullying", duration: "25 phút", xp: 80 }
       ],
       minigame: {
         id: "mg-6",

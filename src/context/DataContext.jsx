@@ -23,7 +23,17 @@ export const DataProvider = ({ children }) => {
       const saved = localStorage.getItem('thcs_curriculum');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map(c => {
+            if (c.grade === 6 || c.id === 'grade-6') {
+              return {
+                ...c,
+                lessons: (c.lessons || []).filter(l => l.id !== 'l6-4')
+              };
+            }
+            return c;
+          });
+        }
       }
     } catch (e) {
       console.warn('Lỗi đọc curriculum từ localStorage:', e);
