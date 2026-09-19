@@ -21,7 +21,7 @@ const AppData = {
     {
       id: "grade-6",
       grade: 6,
-      title: "Ứng xử & An toàn số",
+      title: "Chủ đề D: An toàn thông tin internet",
       badgeText: "CHỦ ĐỀ KHỐI 6",
       themeClass: "card-grade-6",
       color: "#7C3AED",

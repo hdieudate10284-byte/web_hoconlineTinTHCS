@@ -28,6 +28,7 @@ export const DataProvider = ({ children }) => {
             if (c.grade === 6 || c.id === 'grade-6') {
               return {
                 ...c,
+                title: 'Chủ đề D: An toàn thông tin internet',
                 lessons: (c.lessons || []).filter(l => l.id !== 'l6-4')
               };
             }
@@ -449,7 +450,7 @@ export const DataProvider = ({ children }) => {
       try {
         // 1. Tự động kiểm tra/khởi tạo chủ đề khối trong curriculum_topics để tránh lỗi Foreign Key
         const topicTitles = {
-          6: 'Chủ đề D: An toàn số và Ứng xử trên mạng',
+          6: 'Chủ đề D: An toàn thông tin internet',
           7: 'Chủ đề D: Ứng xử trên mạng và An toàn thông tin',
           8: 'Chủ đề D: Đạo đức, pháp luật và văn hóa trong môi trường số',
           9: 'Chủ đề D: Tác quyền, an toàn thông tin và văn hóa số'
