@@ -26,10 +26,15 @@ export const DataProvider = ({ children }) => {
         if (Array.isArray(parsed) && parsed.length > 0) {
           return parsed.map(c => {
             if (c.grade === 6 || c.id === 'grade-6') {
+              const standardG6 = INITIAL_CURRICULUM[0].lessons;
+              const extraLessons = (c.lessons || []).filter(l => 
+                !['l6-1', 'l6-2', 'l6-3', 'l6-4'].includes(l.id) &&
+                l.title.trim().toLowerCase() !== 'bài 4'
+              );
               return {
                 ...c,
                 title: 'Chủ đề D: An toàn thông tin internet',
-                lessons: (c.lessons || []).filter(l => l.title.trim().toLowerCase() !== 'bài 4')
+                lessons: [...standardG6, ...extraLessons]
               };
             }
             return c;
@@ -129,9 +134,18 @@ export const DataProvider = ({ children }) => {
 
             const topicTitle = t.grade_level === 6 ? 'Chủ đề D: An toàn thông tin internet' : t.title;
 
-            // Loại bỏ bài học thừa có tên 'Bài 4'
-            const cleanLessons = (combinedLessons.length > 0 ? combinedLessons : localLessons)
-              .filter(l => l.title.trim().toLowerCase() !== 'bài 4');
+            let cleanLessons = combinedLessons.length > 0 ? combinedLessons : localLessons;
+
+            if (t.grade_level === 6) {
+              const standardG6 = INITIAL_CURRICULUM[0].lessons;
+              const extraLessons = cleanLessons.filter(l => 
+                !['l6-1', 'l6-2', 'l6-3', 'l6-4'].includes(l.id) &&
+                l.title.trim().toLowerCase() !== 'bài 4'
+              );
+              cleanLessons = [...standardG6, ...extraLessons];
+            } else {
+              cleanLessons = cleanLessons.filter(l => l.title.trim().toLowerCase() !== 'bài 4');
+            }
 
             return {
               id: `grade-${t.grade_level}`,
@@ -148,11 +162,27 @@ export const DataProvider = ({ children }) => {
           });
           setCurriculum(merged);
 
-          // Tự động xóa bài thừa 'Bài 4' và cập nhật tiêu đề Khối 6 trên Supabase Cloud DB
+          // Tự động xóa bài thừa 'Bài 4', cập nhật 4 bài học chuẩn Khối 6 và cập nhật tiêu đề Khối 6 trên Supabase Cloud DB
           supabaseService.client
             .from('lessons')
             .delete()
             .ilike('title', 'bài 4')
+            .then(() => {})
+            .catch(() => {});
+
+          const g6StandardDb = INITIAL_CURRICULUM[0].lessons.map((l, index) => ({
+            lesson_code: l.id,
+            grade_level: 6,
+            display_order: index + 1,
+            title: l.title,
+            duration: l.duration,
+            xp_reward: l.xp,
+            summary: l.summary
+          }));
+
+          supabaseService.client
+            .from('lessons')
+            .upsert(g6StandardDb, { onConflict: 'lesson_code' })
             .then(() => {})
             .catch(() => {});
 
