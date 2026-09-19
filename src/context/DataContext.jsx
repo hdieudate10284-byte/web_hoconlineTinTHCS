@@ -29,7 +29,7 @@ export const DataProvider = ({ children }) => {
               return {
                 ...c,
                 title: 'Chủ đề D: An toàn thông tin internet',
-                lessons: (c.lessons || []).filter(l => l.id !== 'l6-4')
+                lessons: (c.lessons || []).filter(l => l.title.trim().toLowerCase() !== 'bài 4')
               };
             }
             return c;
@@ -129,6 +129,10 @@ export const DataProvider = ({ children }) => {
 
             const topicTitle = t.grade_level === 6 ? 'Chủ đề D: An toàn thông tin internet' : t.title;
 
+            // Loại bỏ bài học thừa có tên 'Bài 4'
+            const cleanLessons = (combinedLessons.length > 0 ? combinedLessons : localLessons)
+              .filter(l => l.title.trim().toLowerCase() !== 'bài 4');
+
             return {
               id: `grade-${t.grade_level}`,
               grade: t.grade_level,
@@ -138,13 +142,20 @@ export const DataProvider = ({ children }) => {
               color: t.theme_color || '#7C3AED',
               symbol: t.symbol || '📘',
               description: t.description,
-              lessons: combinedLessons.length > 0 ? combinedLessons : localLessons,
+              lessons: cleanLessons,
               minigame: localMatch ? localMatch.minigame : null
             };
           });
           setCurriculum(merged);
 
-          // Tự động cập nhật tên tiêu đề Khối 6 trên Supabase Cloud Database nếu cần
+          // Tự động xóa bài thừa 'Bài 4' và cập nhật tiêu đề Khối 6 trên Supabase Cloud DB
+          supabaseService.client
+            .from('lessons')
+            .delete()
+            .ilike('title', 'bài 4')
+            .then(() => {})
+            .catch(() => {});
+
           supabaseService.client
             .from('curriculum_topics')
             .update({ title: 'Chủ đề D: An toàn thông tin internet' })

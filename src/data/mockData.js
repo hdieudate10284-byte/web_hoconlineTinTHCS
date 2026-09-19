@@ -13,9 +13,10 @@ export const INITIAL_CURRICULUM = [
     symbol: "Aá",
     description: "Quy tắc ứng xử văn minh trên không gian mạng, bảo vệ thông tin cá nhân & phòng chống bắt nạt trực tuyến.",
     lessons: [
-      { id: "l6-1", title: "Quy tắc ứng xử văn minh trên mạng (Netiquette)", duration: "15 phút", xp: 50, summary: "Bộ quy tắc ứng xử tôn trọng, lịch thiệp và không xúc phạm người khác trên mạng xã hội.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l6-2", title: "Bảo vệ bí mật thông tin cá nhân", duration: "20 phút", xp: 60, summary: "Không tiết lộ số điện thoại, địa chỉ nhà, mật khẩu cho người lạ trên internet.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l6-3", title: "Nhận diện & Phòng chống Cyberbullying", duration: "25 phút", xp: 80, summary: "Kỹ năng đối phó với hành vi bắt nạt qua mạng và cách tìm kiếm sự trợ giúp từ người lớn.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
+      { id: "l6-1", title: "Tầm quan trọng của An toàn thông tin trên Internet", duration: "15 phút", xp: 50, summary: "Nhận thức về tầm quan trọng của việc bảo vệ thông tin và dữ liệu khi sử dụng Internet.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l6-2", title: "Bảo vệ thông tin & dữ liệu cá nhân", duration: "20 phút", xp: 60, summary: "Không tiết lộ số điện thoại, địa chỉ nhà, mật khẩu cho người lạ trên internet.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l6-3", title: "Thiết lập mật khẩu an toàn & Bảo mật tài khoản", duration: "20 phút", xp: 70, summary: "Phương pháp tạo mật khẩu mạnh và bảo vệ tài khoản cá nhân trực tuyến.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l6-4", title: "Nhận diện các rủi ro & Nguy cơ mất an toàn trên Internet", duration: "25 phút", xp: 80, summary: "Kỹ năng nhận diện các nguy cơ lừa đảo, mã độc và phòng chống mất an toàn thông tin trên mạng.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
     minigame: {
       id: "mg-6",
