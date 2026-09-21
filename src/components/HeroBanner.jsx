@@ -3,8 +3,36 @@
    ============================================================================ */
 
 import React from 'react';
+import { useData } from '../context/DataContext';
 
 export const HeroBanner = () => {
+  const { curriculum } = useData();
+
+  const getPillIcon = (grade) => {
+    switch (grade) {
+      case 6: return '🛡️';
+      case 7: return '📜';
+      case 8: return '🔒';
+      case 9: return '⚖️';
+      default: return '📘';
+    }
+  };
+
+  const defaultPills = [
+    { grade: 6, title: 'An toàn thông tin trên internet', icon: '🛡️' },
+    { grade: 7, title: 'Bản quyền & Tác quyền số', icon: '📜' },
+    { grade: 8, title: 'Lừa đảo & An ninh mạng', icon: '🔒' },
+    { grade: 9, title: 'Dữ liệu & Luật An ninh mạng', icon: '⚖️' }
+  ];
+
+  const displayList = (curriculum && curriculum.length > 0)
+    ? curriculum.map(c => ({
+        grade: c.grade,
+        title: c.title,
+        icon: getPillIcon(c.grade)
+      }))
+    : defaultPills;
+
   return (
     <header className="hero-banner-card">
       {/* 1. LOGO & BANNER TÊN TRƯỜNG THCS NGUYỄN HUỆ (PHÍA TRÊN CÙNG) */}
@@ -31,22 +59,12 @@ export const HeroBanner = () => {
           </p>
           
           <div className="hero-features-row">
-            <div className="hero-pill-tag">
-              <div className="hero-pill-icon">🛡️</div>
-              <span>Khối 6: Ứng Xử &amp; An Toàn Số</span>
-            </div>
-            <div className="hero-pill-tag">
-              <div className="hero-pill-icon">📜</div>
-              <span>Khối 7: Bản Quyền &amp; Tác Quyền</span>
-            </div>
-            <div className="hero-pill-tag">
-              <div className="hero-pill-icon">🔒</div>
-              <span>Khối 8: Lừa Đảo &amp; An Ninh Mạng</span>
-            </div>
-            <div className="hero-pill-tag">
-              <div className="hero-pill-icon">⚖️</div>
-              <span>Khối 9: Luật An Ninh Mạng 2018</span>
-            </div>
+            {displayList.map(item => (
+              <div key={item.grade} className="hero-pill-tag">
+                <div className="hero-pill-icon">{item.icon}</div>
+                <span>Khối {item.grade}: {item.title}</span>
+              </div>
+            ))}
           </div>
         </div>
 
