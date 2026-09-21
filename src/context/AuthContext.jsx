@@ -138,9 +138,10 @@ export const AuthProvider = ({ children }) => {
       'hocsinh7': { name: 'Trần Thị Bình', email: 'hocsinh7@hocsinh.edu.vn', role: 'student', class: cleanClass || '7/1', grade: 7, xp: 720, level: 5 },
       'hocsinh8': { name: 'Lê Hoàng Cường', email: 'hocsinh8@hocsinh.edu.vn', role: 'student', class: cleanClass || '8/1', grade: 8, xp: 310, level: 2 },
       'hocsinh9': { name: 'Phạm Mỹ Duyên', email: 'hocsinh9@hocsinh.edu.vn', role: 'student', class: cleanClass || '9/1', grade: 9, xp: 980, level: 7 },
-      'giaovien': { name: 'Cô Nguyễn Thị Huyền Diệu', email: 'hdieudate10284@gmail.com', role: 'teacher', class: 'Giáo viên', grade: 9, xp: 1500, level: 10 },
+      'giaovien': { name: 'Giáo viên Bộ môn', email: 'giaovien@tinhoc.edu.vn', role: 'teacher', class: 'Giáo viên', grade: 9, xp: 1500, level: 10 },
       'admin': { name: 'Cô Nguyễn Thị Huyền Diệu', email: 'hdieudate10284@gmail.com', role: 'admin', class: 'Ban Quản Trị', grade: 9, xp: 9999, level: 99 },
-      'hdieudate10284@gmail.com': { name: 'Cô Nguyễn Thị Huyền Diệu', email: 'hdieudate10284@gmail.com', role: 'teacher', class: 'Giáo viên', grade: 9, xp: 1500, level: 10 }
+      'hdieudate10284': { name: 'Cô Nguyễn Thị Huyền Diệu', email: 'hdieudate10284@gmail.com', role: 'admin', class: 'Ban Quản Trị', grade: 9, xp: 9999, level: 99 },
+      'hdieudate10284@gmail.com': { name: 'Cô Nguyễn Thị Huyền Diệu', email: 'hdieudate10284@gmail.com', role: 'admin', class: 'Ban Quản Trị', grade: 9, xp: 9999, level: 99 }
     };
 
     if (fallbackAccounts[cleanUser] && (cleanPass === '123456' || cleanPass.length >= 4)) {
@@ -156,33 +157,34 @@ export const AuthProvider = ({ children }) => {
         xp: acc.xp,
         level: acc.level,
         avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${cleanUser}`,
-        badgesCount: 2
+        badgesCount: acc.role === 'admin' ? 10 : 2
       };
       setCurrentUser(localObj);
       setIsLoadingAuth(false);
-      return { success: true, user: localObj, message: `Đăng nhập thành công với Lớp ${localObj.class}!` };
+      return { success: true, user: localObj, message: `Đăng nhập thành công với vai trò ${acc.role === 'admin' ? 'Admin QTV (Cô Nguyễn Thị Huyền Diệu)' : acc.role === 'teacher' ? 'Giáo viên' : 'Học sinh'}!` };
     }
 
     // D. Cho phép Giáo viên bất kỳ đăng nhập bằng Email nếu khớp định dạng @ và mật khẩu >= 4
     if ((cleanUser.includes('@') || cleanClass === 'Giáo viên') && cleanPass.length >= 4) {
-      const isCd = cleanUser === 'hdieudate10284@gmail.com';
+      const isCd = cleanUser === 'hdieudate10284@gmail.com' || cleanUser === 'hdieudate10284';
       const teacherName = isCd ? 'Cô Nguyễn Thị Huyền Diệu' : `Giáo viên ${cleanUser.split('@')[0]}`;
+      const teacherRole = isCd ? 'admin' : 'teacher';
       const teacherObj = {
         id: Date.now(),
         username: cleanUser.split('@')[0],
         name: teacherName,
-        email: cleanUser,
-        role: 'teacher',
-        class: 'Giáo viên',
+        email: cleanUser.includes('@') ? cleanUser : 'hdieudate10284@gmail.com',
+        role: teacherRole,
+        class: isCd ? 'Ban Quản Trị' : 'Giáo viên',
         grade: 9,
-        xp: 1500,
-        level: 10,
+        xp: isCd ? 9999 : 1500,
+        level: isCd ? 99 : 10,
         avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${cleanUser}`,
-        badgesCount: 3
+        badgesCount: isCd ? 10 : 3
       };
       setCurrentUser(teacherObj);
       setIsLoadingAuth(false);
-      return { success: true, user: teacherObj, message: `Đăng nhập thành công tài khoản Giáo viên (${teacherObj.email})!` };
+      return { success: true, user: teacherObj, message: `Đăng nhập thành công tài khoản ${isCd ? 'Admin (Cô Nguyễn Thị Huyền Diệu)' : 'Giáo viên'} (${teacherObj.email})!` };
     }
 
     setIsLoadingAuth(false);
@@ -287,21 +289,29 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser(prev => {
       let updated = { ...prev, role: newRole };
       if (newRole === 'teacher') {
-        updated.name = 'Cô Nguyễn Thị Huyền Diệu';
-        updated.email = 'hdieudate10284@gmail.com';
+        const isAlreadyTeacherOrAdmin = prev?.role === 'teacher' || prev?.role === 'admin';
+        const isCdUser = prev?.email === 'hdieudate10284@gmail.com' || prev?.username === 'hdieudate10284';
+        updated.name = isCdUser ? 'Cô Nguyễn Thị Huyền Diệu' : (isAlreadyTeacherOrAdmin && prev?.name ? prev.name : 'Giáo viên Bộ môn');
+        updated.email = isCdUser ? 'hdieudate10284@gmail.com' : (prev?.email || 'giaovien@tinhoc.edu.vn');
         updated.class = 'Giáo viên';
         updated.level = 10;
         updated.xp = 1500;
       } else if (newRole === 'admin') {
-        updated.name = 'Cô Nguyễn Thị Huyền Diệu';
-        updated.email = 'hdieudate10284@gmail.com';
+        const isCdUser = prev?.email === 'hdieudate10284@gmail.com' || prev?.username === 'hdieudate10284' || prev?.role === 'admin';
+        if (isCdUser) {
+          updated.name = 'Cô Nguyễn Thị Huyền Diệu';
+          updated.email = 'hdieudate10284@gmail.com';
+        } else {
+          updated.name = 'Ban Quản Trị';
+          updated.email = 'admin@tinhoc.edu.vn';
+        }
         updated.class = 'Ban Quản Trị';
         updated.level = 99;
         updated.xp = 9999;
       } else {
-        updated.name = prev.name && prev.role !== 'teacher' ? prev.name : 'Nguyễn Văn An';
-        updated.email = prev.username ? `${prev.username}@hocsinh.edu.vn` : 'hocsinh6@hocsinh.edu.vn';
-        updated.class = `Lớp ${prev.grade || 6}A1`;
+        updated.name = prev?.name && prev?.role !== 'teacher' && prev?.role !== 'admin' ? prev.name : 'Nguyễn Văn An';
+        updated.email = prev?.username ? `${prev.username}@hocsinh.edu.vn` : 'hocsinh6@hocsinh.edu.vn';
+        updated.class = `Lớp ${prev?.grade || 6}A1`;
       }
       return updated;
     });

@@ -15,9 +15,8 @@ export const HeaderProfile = ({ onOpenAuth, onOpenLeaderboard, onOpenGallery, on
 
   const handleAnalyticsClick = () => {
     if (!isTeacherOrAdmin) {
-      if (window.confirm('🔒 Chức năng Báo cáo Thống kê Lượng tương tác & Xuất file Excel dành cho vai trò Giáo viên / Admin.\n\nBạn có muốn tự động chuyển sang vai trò "👨‍🏫 Giáo viên" để xem báo cáo thống kê ngay bây giờ không?')) {
-        switchRole('teacher');
-        onOpenAnalytics();
+      if (window.confirm('🔒 Chức năng Báo cáo Thống kê & Xuất Excel dành riêng cho Giáo viên / Admin.\n\nBạn có muốn mở khung Đăng Nhập tài khoản Giáo viên/Admin để tiếp tục không?')) {
+        onOpenAuth('login');
       }
       return;
     }
@@ -26,10 +25,21 @@ export const HeaderProfile = ({ onOpenAuth, onOpenLeaderboard, onOpenGallery, on
 
   const handleSupabaseClick = () => {
     if (!isAdmin) {
-      alert('🔒 QUYỀN TRUY CẬP BỊ TỪ CHỐI!\n\nChức năng Cấu hình & Quản trị Supabase DB chỉ dành riêng cho Admin QTV.\n\nGiáo viên có thể sử dụng các chức năng Thêm bài giảng, Xem thống kê & Xuất Excel!');
+      alert('🔒 QUYỀN TRUY CẬP BỊ TỪ CHỐI!\n\nChức năng Cấu hình & Quản trị Supabase DB chỉ dành riêng cho Admin QTV (Cô Nguyễn Thị Huyền Diệu).\n\nVui lòng đăng nhập đúng tài khoản Admin để truy cập!');
+      onOpenAuth('login');
       return;
     }
     onOpenSupabase();
+  };
+
+  const handleRoleSelect = (targetRole) => {
+    if (targetRole === 'admin' && !isAdmin) {
+      if (window.confirm('🔒 TÀI KHOẢN BẢO MẬT ADMIN!\n\nTài khoản Admin (Cô Nguyễn Thị Huyền Diệu) yêu cầu nhập đúng Tên tài khoản/Email và Mật khẩu.\n\nBạn có muốn mở khung Đăng Nhập ngay bây giờ không?')) {
+        onOpenAuth('login');
+      }
+      return;
+    }
+    switchRole(targetRole);
   };
 
   return (
@@ -89,7 +99,7 @@ export const HeaderProfile = ({ onOpenAuth, onOpenLeaderboard, onOpenGallery, on
         <select 
           className="role-switcher-select" 
           value={currentUser?.role || 'student'}
-          onChange={(e) => switchRole(e.target.value)}
+          onChange={(e) => handleRoleSelect(e.target.value)}
         >
           <option value="student">🎓 Vai trò: Học sinh</option>
           <option value="teacher">👨‍🏫 Vai trò: Giáo viên</option>

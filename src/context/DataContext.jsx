@@ -24,21 +24,10 @@ export const DataProvider = ({ children }) => {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.map(c => {
-            if (c.grade === 6 || c.id === 'grade-6') {
-              const standardG6 = INITIAL_CURRICULUM[0].lessons;
-              const extraLessons = (c.lessons || []).filter(l => 
-                !['l6-1', 'l6-2', 'l6-3', 'l6-4'].includes(l.id) &&
-                l.title.trim().toLowerCase() !== 'bài 4'
-              );
-              return {
-                ...c,
-                title: 'An toàn thông tin trên internet',
-                lessons: [...standardG6, ...extraLessons]
-              };
-            }
-            return c;
-          });
+          return parsed.map(c => ({
+            ...c,
+            lessons: (c.lessons || []).filter(l => l.title && l.title.trim().toLowerCase() !== 'bài 4')
+          }));
         }
       }
     } catch (e) {
@@ -56,7 +45,7 @@ export const DataProvider = ({ children }) => {
   const [isDbConnected, setIsDbConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Tự động lưu curriculum vào localStorage mỗi khi có bài học mới được thêm
+  // Tự động lưu curriculum vào localStorage mỗi khi có bài học mới được thêm hoặc chỉnh sửa
   useEffect(() => {
     try {
       localStorage.setItem('thcs_curriculum', JSON.stringify(curriculum));
@@ -90,7 +79,7 @@ export const DataProvider = ({ children }) => {
           .select('*')
           .order('display_order', { ascending: true });
 
-        // Lấy danh sách bài học đang lưu cục bộ trong localStorage (bao gồm bài mới do Giáo viên thêm)
+        // Lấy danh sách bài học đang lưu cục bộ trong localStorage (bao gồm các cập nhật mới do Giáo viên thực hiện)
         let savedLocalCurriculum = INITIAL_CURRICULUM;
         try {
           const savedStr = localStorage.getItem('thcs_curriculum');
@@ -121,31 +110,30 @@ export const DataProvider = ({ children }) => {
             const localMatch = savedLocalCurriculum.find(c => c.grade === t.grade_level);
             const localLessons = localMatch ? localMatch.lessons : [];
 
-            // Hợp nhất các bài học từ DB và các bài mới tạo từ local
-            const combinedLessons = [...dbLessons];
+            // Hợp nhất dữ liệu bài học từ DB và từ localStorage, bảo toàn thông tin giáo viên vừa chỉnh sửa
+            const combinedLessonsMap = new Map();
+
+            // Ưu tiên nạp các bài học từ localStorage trước
             localLessons.forEach(ll => {
-              const existsInDb = combinedLessons.some(
-                dbl => dbl.id === ll.id || dbl.title.trim().toLowerCase() === ll.title.trim().toLowerCase()
-              );
-              if (!existsInDb) {
-                combinedLessons.push(ll);
-              }
+              if (ll && ll.id) combinedLessonsMap.set(ll.id, ll);
+            });
+
+            // Bổ sung/cập nhật từ DB nếu DB có dữ liệu bài học
+            dbLessons.forEach(dbl => {
+              const existingLocal = combinedLessonsMap.get(dbl.id);
+              combinedLessonsMap.set(dbl.id, {
+                id: dbl.id,
+                title: dbl.title || existingLocal?.title,
+                duration: dbl.duration || existingLocal?.duration || '20 phút',
+                xp: dbl.xp || existingLocal?.xp || 50,
+                summary: dbl.summary || existingLocal?.summary || '',
+                videoUrl: dbl.videoUrl || existingLocal?.videoUrl || '',
+                documentUrl: dbl.documentUrl || existingLocal?.documentUrl || ''
+              });
             });
 
             const topicTitle = t.grade_level === 6 ? 'An toàn thông tin trên internet' : t.title;
-
-            let cleanLessons = combinedLessons.length > 0 ? combinedLessons : localLessons;
-
-            if (t.grade_level === 6) {
-              const standardG6 = INITIAL_CURRICULUM[0].lessons;
-              const extraLessons = cleanLessons.filter(l => 
-                !['l6-1', 'l6-2', 'l6-3', 'l6-4'].includes(l.id) &&
-                l.title.trim().toLowerCase() !== 'bài 4'
-              );
-              cleanLessons = [...standardG6, ...extraLessons];
-            } else {
-              cleanLessons = cleanLessons.filter(l => l.title.trim().toLowerCase() !== 'bài 4');
-            }
+            const cleanLessons = Array.from(combinedLessonsMap.values()).filter(l => l.title && l.title.trim().toLowerCase() !== 'bài 4');
 
             return {
               id: `grade-${t.grade_level}`,
@@ -162,30 +150,7 @@ export const DataProvider = ({ children }) => {
           });
           setCurriculum(merged);
 
-          // Tự động xóa bài thừa 'Bài 4', cập nhật 4 bài học chuẩn Khối 6 và cập nhật tiêu đề Khối 6 trên Supabase Cloud DB
-          supabaseService.client
-            .from('lessons')
-            .delete()
-            .ilike('title', 'bài 4')
-            .then(() => {})
-            .catch(() => {});
-
-          const g6StandardDb = INITIAL_CURRICULUM[0].lessons.map((l, index) => ({
-            lesson_code: l.id,
-            grade_level: 6,
-            display_order: index + 1,
-            title: l.title,
-            duration: l.duration,
-            xp_reward: l.xp,
-            summary: l.summary
-          }));
-
-          supabaseService.client
-            .from('lessons')
-            .upsert(g6StandardDb, { onConflict: 'lesson_code' })
-            .then(() => {})
-            .catch(() => {});
-
+          // Cập nhật tiêu đề Khối 6 chuẩn trên Supabase DB nếu cần
           supabaseService.client
             .from('curriculum_topics')
             .update({ title: 'An toàn thông tin trên internet' })

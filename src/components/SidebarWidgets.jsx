@@ -21,7 +21,8 @@ export const SidebarWidgets = ({ onOpenAnalytics, onOpenChatbot }) => {
 
   const handleOpenStats = () => {
     if (currentUser?.role !== 'teacher' && currentUser?.role !== 'admin') {
-      switchRole('teacher');
+      alert('🔒 Chức năng Xem Báo Cáo & Xuất Excel dành cho Giáo viên / Admin.\n\nVui lòng đăng nhập tài khoản Giáo viên/Admin để truy cập!');
+      return;
     }
     if (onOpenAnalytics) onOpenAnalytics();
   };
