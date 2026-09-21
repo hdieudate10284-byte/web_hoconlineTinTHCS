@@ -17,6 +17,38 @@ const DataContext = createContext();
 
 export const useData = () => useContext(DataContext);
 
+const sanitizeLessons = (lessonsList) => {
+  if (!Array.isArray(lessonsList)) return [];
+  return lessonsList
+    .filter(l => {
+      if (!l || !l.title) return false;
+      const lower = l.title.trim().toLowerCase();
+      if (lower === 'bài 4' || lower.includes('kiểm chứng thông tin') || lower.includes('tin giả') || lower.includes('fake news')) {
+        return false;
+      }
+      return true;
+    })
+    .map(l => {
+      const lower = l.title.trim().toLowerCase();
+      let newTitle = l.title;
+      let newSummary = l.summary;
+
+      if (lower.includes('văn hóa giao tiếp') || lower.includes('văn hoá giao tiếp')) {
+        newTitle = 'Làm gì khi gặp thông tin có nội dung xấu trên mạng';
+        newSummary = 'Cách xử lý, báo cáo và phòng tránh khi tiếp cận các thông tin xấu, độc hại trên không gian mạng.';
+      } else if (lower.includes('bạo lực') || lower.includes('cyberbullying')) {
+        newTitle = 'Tác hại và cách phòng tránh bệnh nghiện internet';
+        newSummary = 'Nhận biết các dấu hiệu nghiện internet, game online và giải pháp cân bằng cuộc sống thực.';
+      }
+
+      return {
+        ...l,
+        title: newTitle,
+        summary: newSummary
+      };
+    });
+};
+
 export const DataProvider = ({ children }) => {
   const [curriculum, setCurriculum] = useState(() => {
     try {
@@ -26,7 +58,7 @@ export const DataProvider = ({ children }) => {
         if (Array.isArray(parsed) && parsed.length > 0) {
           return parsed.map(c => ({
             ...c,
-            lessons: (c.lessons || []).filter(l => l.title && l.title.trim().toLowerCase() !== 'bài 4')
+            lessons: sanitizeLessons(c.lessons)
           }));
         }
       }
@@ -133,7 +165,7 @@ export const DataProvider = ({ children }) => {
             });
 
             const topicTitle = t.grade_level === 6 ? 'An toàn thông tin trên internet' : t.title;
-            const cleanLessons = Array.from(combinedLessonsMap.values()).filter(l => l.title && l.title.trim().toLowerCase() !== 'bài 4');
+            const cleanLessons = sanitizeLessons(Array.from(combinedLessonsMap.values()));
 
             return {
               id: `grade-${t.grade_level}`,

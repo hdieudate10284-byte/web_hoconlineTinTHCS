@@ -59,10 +59,8 @@ export const INITIAL_CURRICULUM = [
     symbol: "📖",
     description: "Luật sở hữu trí tuệ, bản quyền tác giả, trích dẫn tài liệu hợp lệ & phần mềm nguồn mở.",
     lessons: [
-      { id: "l7-1", title: "Khái niệm Bản quyền & Tác quyền số", duration: "15 phút", xp: 50, summary: "Quyền tác giả đối với tác phẩm văn học, nghệ thuật, phần mềm và bài giảng điện tử.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l7-2", title: "Cách trích dẫn tài liệu & hình ảnh chuẩn", duration: "20 phút", xp: 60, summary: "Phương pháp ghi nguồn tác giả, đường link tham khảo chuẩn học thuật.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l7-3", title: "Phần mềm thương mại vs Phần mềm nguồn mở", duration: "25 phút", xp: 80, summary: "Sự khác biệt giữa phần mềm có bản quyền trả phí và phần mềm mã nguồn mở miễn phí.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l7-4", title: "Giấy phép Creative Commons (CC) phổ biến", duration: "20 phút", xp: 70, summary: "Tìm hiểu các loại giấy phép CC-BY, CC-NC, CC-SA khi sử dụng tài nguyên số.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
+      { id: "l7-1", title: "Làm gì khi gặp thông tin có nội dung xấu trên mạng", duration: "20 phút", xp: 60, summary: "Cách xử lý, báo cáo và phòng tránh khi tiếp cận các thông tin xấu, độc hại trên không gian mạng.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l7-2", title: "Tác hại và cách phòng tránh bệnh nghiện internet", duration: "25 phút", xp: 80, summary: "Nhận biết các dấu hiệu nghiện internet, game online và giải pháp cân bằng cuộc sống thực.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
     minigame: {
       id: "mg-7",
