@@ -59,7 +59,7 @@ export const INITIAL_CURRICULUM = [
     symbol: "📖",
     description: "Luật sở hữu trí tuệ, bản quyền tác giả, trích dẫn tài liệu hợp lệ & phần mềm nguồn mở.",
     lessons: [
-      { id: "l7-1", title: "Làm gì khi gặp thông tin có nội dung xấu trên mạng", duration: "20 phút", xp: 60, summary: "Cách xử lý, báo cáo và phòng tránh khi tiếp cận các thông tin xấu, độc hại trên không gian mạng.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l7-1", title: "Sử dụng mạng xã hội an toàn", duration: "20 phút", xp: 60, summary: "Các nguyên tắc và kĩ năng sử dụng mạng xã hội an toàn, văn hóa và hiệu quả cho học sinh.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
       { id: "l7-2", title: "Tác hại và cách phòng tránh bệnh nghiện internet", duration: "25 phút", xp: 80, summary: "Nhận biết các dấu hiệu nghiện internet, game online và giải pháp cân bằng cuộc sống thực.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
     minigame: {
@@ -91,8 +91,8 @@ export const INITIAL_CURRICULUM = [
     symbol: "💡",
     description: "Nhận diện tin nhắn lừa đảo Phishing, nguyên tắc đặt mật khẩu mạnh, 2FA & phòng tránh Virus/Malware.",
     lessons: [
-      { id: "l8-1", title: "Nhận diện chiêu trò lừa đảo giả mạo Phishing", duration: "20 phút", xp: 70, summary: "Phát hiện email giả mạo ngân hàng, đường link độc hại đánh cắp tài khoản.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l8-2", title: "Tạo lập mật khẩu mạnh & Xác thực 2 lớp (2FA)", duration: "20 phút", xp: 70, summary: "Bí quyết đặt mật khẩu an toàn và bật mã xác thực qua điện thoại (OTP/2FA).", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l8-1", title: "Biểu hiện vi phạm khi sử dụng công nghệ kĩ thuật số.", duration: "20 phút", xp: 70, summary: "Nhận biết các biểu hiện vi phạm đạo đức, pháp luật và văn hóa khi sử dụng công nghệ kỹ thuật số.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l8-2", title: "Tuân thủ những quy định về đạo đức, văn hóa và pháp luật khi tạo ra sản phẫm số", duration: "20 phút", xp: 70, summary: "Nắm vững các quy định về đạo đức, văn hóa và pháp luật khi sáng tạo và chia sẻ sản phẩm số.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
       { id: "l8-3", title: "Phòng tránh Virus, Mã độc & Phần mềm độc hại", duration: "25 phút", xp: 80, summary: "Cài đặt phần mềm diệt virus và không tải file từ các trang web không rõ nguồn gốc.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
       { id: "l8-4", title: "An toàn khi sử dụng Wi-Fi công cộng", duration: "15 phút", xp: 60, summary: "Tránh giao dịch quan trọng trên mạng Wi-Fi mở tại quán cà phê, nơi công cộng.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
@@ -125,8 +125,8 @@ export const INITIAL_CURRICULUM = [
     symbol: "🎓",
     description: "Luật An ninh mạng 2018, bảo vệ dữ liệu cá nhân, mã hóa dữ liệu & trách nhiệm của công dân số.",
     lessons: [
-      { id: "l9-1", title: "Nội dung cơ bản Luật An ninh mạng 2018", duration: "25 phút", xp: 80, summary: "Các hành vi bị nghiêm cấm trên không gian mạng và chế tài xử phạt theo pháp luật Việt Nam.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l9-2", title: "Bảo vệ dữ liệu cá nhân & Quyền riêng tư số", duration: "20 phút", xp: 70, summary: "Quy định bảo vệ dữ liệu cá nhân theo Nghị định 13/2023/NĐ-CP.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l9-1", title: "Một số tác động tiêu cực của công nghệ số", duration: "25 phút", xp: 80, summary: "Nhận biết các tác động tiêu cực của công nghệ số đối với đời sống, sức khỏe và xã hội.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
+      { id: "l9-2", title: "Sử dụng dịch vụ internet đúng luật", duration: "20 phút", xp: 70, summary: "Các quy định pháp luật và trách nhiệm công dân khi tham gia và sử dụng các dịch vụ Internet.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
       { id: "l9-3", title: "Mã hóa dữ liệu & An toàn lưu trữ Đám mây", duration: "25 phút", xp: 80, summary: "Ứng dụng công nghệ mã hóa đầu cuối và sao lưu dữ liệu an toàn trên Google Drive / OneDrive.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
       { id: "l9-4", title: "Trách nhiệm công dân trong kỷ nguyên số", duration: "20 phút", xp: 70, summary: "Xây dựng môi trường mạng lành mạnh, chia sẻ kiến thức tích cực cho cộng đồng.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
@@ -213,16 +213,16 @@ export const INITIAL_ANALYTICS_STATS = {
     "l6-2": { title: "Bảo vệ bí mật thông tin cá nhân", grade: 6, views: 42 },
     "l6-3": { title: "Nhận diện & Phòng chống Cyberbullying", grade: 6, views: 76 },
     "l6-4": { title: "Phân biệt tin thật & tin giả (Fake News)", grade: 6, views: 64 },
-    "l7-1": { title: "Khái niệm Bản quyền & Tác quyền số", grade: 7, views: 35 },
+    "l7-1": { title: "Sử dụng mạng xã hội an toàn", grade: 7, views: 35 },
     "l7-2": { title: "Cách trích dẫn tài liệu & hình ảnh chuẩn", grade: 7, views: 48 },
     "l7-3": { title: "Phần mềm thương mại vs Phần mềm nguồn mở", grade: 7, views: 29 },
     "l7-4": { title: "Giấy phép Creative Commons (CC) phổ biến", grade: 7, views: 31 },
-    "l8-1": { title: "Nhận diện chiêu trò lừa đảo giả mạo Phishing", grade: 8, views: 92 },
-    "l8-2": { title: "Tạo lập mật khẩu mạnh & Xác thực 2 lớp (2FA)", grade: 8, views: 85 },
+    "l8-1": { title: "Biểu hiện vi phạm khi sử dụng công nghệ kĩ thuật số.", grade: 8, views: 92 },
+    "l8-2": { title: "Tuân thủ những quy định về đạo đức, văn hóa và pháp luật khi tạo ra sản phẫm số", grade: 8, views: 85 },
     "l8-3": { title: "Phòng tránh Virus, Mã độc & Phần mềm độc hại", grade: 8, views: 67 },
     "l8-4": { title: "An toàn khi sử dụng Wi-Fi công cộng", grade: 8, views: 44 },
-    "l9-1": { title: "Nội dung cơ bản Luật An ninh mạng 2018", grade: 9, views: 78 },
-    "l9-2": { title: "Bảo vệ dữ liệu cá nhân & Quyền riêng tư số", grade: 9, views: 65 },
+    "l9-1": { title: "Một số tác động tiêu cực của công nghệ số", grade: 9, views: 78 },
+    "l9-2": { title: "Sử dụng dịch vụ internet đúng luật", grade: 9, views: 65 },
     "l9-3": { title: "Mã hóa dữ liệu & An toàn lưu trữ Đám mây", grade: 9, views: 52 },
     "l9-4": { title: "Trách nhiệm công dân trong kỷ nguyên số", grade: 9, views: 41 }
   },

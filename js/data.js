@@ -108,8 +108,8 @@ const AppData = {
       symbol: "💡",
       description: "Nhận diện tin nhắn lừa đảo Phishing, nguyên tắc đặt mật khẩu mạnh, 2FA & phòng tránh Virus/Malware.",
       lessons: [
-        { id: "l8-1", title: "Nhận diện chiêu trò lừa đảo giả mạo Phishing", duration: "20 phút", xp: 70 },
-        { id: "l8-2", title: "Tạo lập mật khẩu mạnh & Xác thực 2 lớp (2FA)", duration: "20 phút", xp: 70 },
+        { id: "l8-1", title: "Biểu hiện vi phạm khi sử dụng công nghệ kĩ thuật số.", duration: "20 phút", xp: 70 },
+        { id: "l8-2", title: "Tuân thủ những quy định về đạo đức, văn hóa và pháp luật khi tạo ra sản phẫm số", duration: "20 phút", xp: 70 },
         { id: "l8-3", title: "Phòng tránh Virus, Mã độc & Phần mềm độc hại", duration: "25 phút", xp: 80 },
         { id: "l8-4", title: "An toàn khi sử dụng Wi-Fi công cộng", duration: "15 phút", xp: 60 }
       ],
@@ -142,8 +142,8 @@ const AppData = {
       symbol: "🎓",
       description: "Luật An ninh mạng 2018, bảo vệ dữ liệu cá nhân, mã hóa dữ liệu & trách nhiệm của công dân số.",
       lessons: [
-        { id: "l9-1", title: "Nội dung cơ bản Luật An ninh mạng 2018", duration: "25 phút", xp: 80 },
-        { id: "l9-2", title: "Bảo vệ dữ liệu cá nhân & Quyền riêng tư số", duration: "20 phút", xp: 70 },
+        { id: "l9-1", title: "Một số tác động tiêu cực của công nghệ số", duration: "25 phút", xp: 80 },
+        { id: "l9-2", title: "Sử dụng dịch vụ internet đúng luật", duration: "20 phút", xp: 70 },
         { id: "l9-3", title: "Mã hóa dữ liệu & An toàn lưu trữ Đám mây", duration: "25 phút", xp: 80 },
         { id: "l9-4", title: "Trách nhiệm công dân trong kỷ nguyên số", duration: "20 phút", xp: 70 }
       ],

@@ -19,34 +19,55 @@ export const useData = () => useContext(DataContext);
 
 const sanitizeLessons = (lessonsList) => {
   if (!Array.isArray(lessonsList)) return [];
-  return lessonsList
-    .filter(l => {
-      if (!l || !l.title) return false;
-      const lower = l.title.trim().toLowerCase();
-      if (lower === 'bài 4' || lower.includes('kiểm chứng thông tin') || lower.includes('tin giả') || lower.includes('fake news')) {
-        return false;
-      }
-      return true;
-    })
-    .map(l => {
-      const lower = l.title.trim().toLowerCase();
-      let newTitle = l.title;
-      let newSummary = l.summary;
+  const result = [];
+  const seenTitles = new Set();
 
-      if (lower.includes('văn hóa giao tiếp') || lower.includes('văn hoá giao tiếp')) {
-        newTitle = 'Làm gì khi gặp thông tin có nội dung xấu trên mạng';
-        newSummary = 'Cách xử lý, báo cáo và phòng tránh khi tiếp cận các thông tin xấu, độc hại trên không gian mạng.';
-      } else if (lower.includes('bạo lực') || lower.includes('cyberbullying')) {
-        newTitle = 'Tác hại và cách phòng tránh bệnh nghiện internet';
-        newSummary = 'Nhận biết các dấu hiệu nghiện internet, game online và giải pháp cân bằng cuộc sống thực.';
-      }
+  for (const l of lessonsList) {
+    if (!l || !l.title) continue;
+    const lower = l.title.trim().toLowerCase();
 
-      return {
-        ...l,
-        title: newTitle,
-        summary: newSummary
-      };
+    if (lower === 'bài 4' || lower.includes('kiểm chứng thông tin') || lower.includes('tin giả') || lower.includes('fake news')) {
+      continue;
+    }
+
+    let newTitle = l.title;
+    let newSummary = l.summary;
+
+    if (l.id === 'l7-1' || lower.includes('văn hóa giao tiếp') || lower.includes('văn hoá giao tiếp') || lower.includes('nội dung xấu trên mạng') || lower.includes('mạng xã hội an toàn')) {
+      newTitle = 'Sử dụng mạng xã hội an toàn';
+      newSummary = 'Các nguyên tắc và kĩ năng sử dụng mạng xã hội an toàn, văn hóa và hiệu quả cho học sinh.';
+    } else if (lower.includes('bạo lực') || lower.includes('cyberbullying')) {
+      newTitle = 'Tác hại và cách phòng tránh bệnh nghiện internet';
+      newSummary = 'Nhận biết các dấu hiệu nghiện internet, game online và giải pháp cân bằng cuộc sống thực.';
+    } else if (l.id === 'l8-1' || lower.includes('lừa đảo giả mạo phishing') || lower.includes('phishing') || lower.includes('biểu hiện vi phạm')) {
+      newTitle = 'Biểu hiện vi phạm khi sử dụng công nghệ kĩ thuật số.';
+      newSummary = 'Nhận biết các biểu hiện vi phạm đạo đức, pháp luật và văn hóa khi sử dụng công nghệ kỹ thuật số.';
+    } else if (l.id === 'l8-2' || lower.includes('tạo lập mật khẩu') || lower.includes('tạo ra sản phẫm số') || lower.includes('tạo ra sản phẩm số') || lower.includes('tuân thủ những quy định')) {
+      newTitle = 'Tuân thủ những quy định về đạo đức, văn hóa và pháp luật khi tạo ra sản phẫm số';
+      newSummary = 'Nắm vững các quy định về đạo đức, văn hóa và pháp luật khi sáng tạo và chia sẻ sản phẩm số.';
+    } else if (l.id === 'l9-1' || lower.includes('luật an ninh mạng') || lower.includes('khái quát luật') || lower.includes('tác động tiêu cực')) {
+      newTitle = 'Một số tác động tiêu cực của công nghệ số';
+      newSummary = 'Nhận biết các tác động tiêu cực của công nghệ số đối với đời sống, sức khỏe và xã hội.';
+    } else if (l.id === 'l9-2' || lower.includes('bảo vệ dữ liệu') || lower.includes('nghị định 13') || lower.includes('dịch vụ internet đúng luật') || lower.includes('dịch vị internet')) {
+      newTitle = 'Sử dụng dịch vụ internet đúng luật';
+      newSummary = 'Các quy định pháp luật và trách nhiệm công dân khi tham gia và sử dụng các dịch vụ Internet.';
+    }
+
+    newTitle = newTitle.replace(/^mục\s*\d+\s*:\s*/i, '');
+
+    if (seenTitles.has(newTitle)) {
+      continue;
+    }
+    seenTitles.add(newTitle);
+
+    result.push({
+      ...l,
+      title: newTitle,
+      summary: newSummary
     });
+  }
+
+  return result;
 };
 
 export const DataProvider = ({ children }) => {
