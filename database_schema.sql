@@ -119,6 +119,7 @@ CREATE TABLE IF NOT EXISTS public.submissions (
     id BIGSERIAL PRIMARY KEY,
     student_name VARCHAR(100) NOT NULL,
     student_class VARCHAR(50) NOT NULL,
+    grade_level INT DEFAULT 6 CHECK (grade_level BETWEEN 6 AND 9),
     title VARCHAR(255) NOT NULL,
     submission_type VARCHAR(50) DEFAULT 'Infographic',
     file_url TEXT NOT NULL,
@@ -127,6 +128,8 @@ CREATE TABLE IF NOT EXISTS public.submissions (
     likes INT DEFAULT 0 CHECK (likes >= 0),
     created_at TIMESTAMPTZ DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
+
+ALTER TABLE public.submissions ADD COLUMN IF NOT EXISTS grade_level INT DEFAULT 6;
 
 -- ============================================================================
 -- TẦNG 5: BẢNG HUY HIỆU DANH DỰ & NHẬT KÝ HOẠT ĐỘNG (BADGES & ACTIVITY LOGS)

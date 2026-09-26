@@ -219,17 +219,21 @@ export const DataProvider = ({ children }) => {
           .order('id', { ascending: false });
 
         if (subs && subs.length > 0) {
-          setSubmissions(subs.map(s => ({
-            id: s.id,
-            studentName: s.student_name,
-            class: s.student_class,
-            title: s.title,
-            type: s.submission_type,
-            fileUrl: s.file_url,
-            status: s.status,
-            teacherFeedback: s.teacher_feedback || '',
-            likes: s.likes || 0
-          })));
+          setSubmissions(subs.map(s => {
+            const parsedGrade = s.grade_level || s.grade || (s.student_class ? parseInt(String(s.student_class).replace(/\D/g, '')) || 6 : 6);
+            return {
+              id: s.id,
+              studentName: s.student_name,
+              class: s.student_class,
+              grade: parsedGrade,
+              title: s.title,
+              type: s.submission_type,
+              fileUrl: s.file_url,
+              status: s.status,
+              teacherFeedback: s.teacher_feedback || '',
+              likes: s.likes || 0
+            };
+          }));
         }
 
         // 3. Tải Leaderboard
@@ -265,22 +269,39 @@ export const DataProvider = ({ children }) => {
 
   // Nộp sản phẩm mới
   const submitProduct = async (subData) => {
+    const gradeVal = Number(subData.grade) || (subData.class ? parseInt(String(subData.class).replace(/\D/g, '')) || 6 : 6);
+
     if (supabaseService.isConnected && supabaseService.client) {
       try {
-        const { data, error } = await supabaseService.client
+        let insertObj = {
+          student_name: subData.studentName,
+          student_class: subData.class,
+          grade_level: gradeVal,
+          title: subData.title,
+          submission_type: subData.type,
+          file_url: subData.fileUrl,
+          status: 'pending',
+          teacher_feedback: '',
+          likes: 1
+        };
+
+        let { data, error } = await supabaseService.client
           .from('submissions')
-          .insert([{
-            student_name: subData.studentName,
-            student_class: subData.class,
-            title: subData.title,
-            submission_type: subData.type,
-            file_url: subData.fileUrl,
-            status: 'pending',
-            teacher_feedback: '',
-            likes: 1
-          }])
+          .insert([insertObj])
           .select()
           .single();
+
+        // Dự phòng nếu cột grade_level chưa có trong DB cũ
+        if (error && (error.message?.includes('grade_level') || error.code === '42703')) {
+          delete insertObj.grade_level;
+          const fallback = await supabaseService.client
+            .from('submissions')
+            .insert([insertObj])
+            .select()
+            .single();
+          data = fallback.data;
+          error = fallback.error;
+        }
 
         if (error) throw error;
 
@@ -288,6 +309,7 @@ export const DataProvider = ({ children }) => {
           id: data.id,
           studentName: data.student_name,
           class: data.student_class,
+          grade: gradeVal,
           title: data.title,
           type: data.submission_type,
           fileUrl: data.file_url,
@@ -305,6 +327,7 @@ export const DataProvider = ({ children }) => {
     const localSub = {
       id: Date.now(),
       ...subData,
+      grade: gradeVal,
       status: 'pending',
       teacherFeedback: '',
       likes: 1
