@@ -67,8 +67,8 @@ export const LessonModal = ({ isOpen, onClose, topic, lesson, onOpenChatbot }) =
   if (!isOpen || !topic || !lesson) return null;
 
   // Trích xuất linh hoạt tên thuộc tính đường dẫn video & tài liệu
-  let rawVideoUrl = lesson.videoUrl || lesson.video_url || lesson.video || lesson.url || lesson.link || '';
-  let rawDocUrl = lesson.documentUrl || lesson.document_url || lesson.docUrl || lesson.doc_url || lesson.document || '';
+  let rawVideoUrl = lesson.videoUrl || lesson.video_url || lesson.video || lesson.url || lesson.link || 'https://www.youtube.com/watch?v=yrnF4i3D33w';
+  let rawDocUrl = lesson.documentUrl || lesson.document_url || lesson.docUrl || lesson.doc_url || lesson.document || 'https://drive.google.com';
 
   // Trường hợp người dùng lỡ dán URL vào phần tóm tắt bài học (summary)
   if (!rawVideoUrl && lesson.summary) {

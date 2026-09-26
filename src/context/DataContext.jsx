@@ -60,10 +60,15 @@ const sanitizeLessons = (lessonsList) => {
     }
     seenTitles.add(newTitle);
 
+    const videoUrl = l.videoUrl || l.video_url || l.video || l.url || l.link || 'https://www.youtube.com/watch?v=yrnF4i3D33w';
+    const documentUrl = l.documentUrl || l.document_url || l.docUrl || l.document || 'https://drive.google.com';
+
     result.push({
       ...l,
       title: newTitle,
-      summary: newSummary
+      summary: newSummary,
+      videoUrl: videoUrl,
+      documentUrl: documentUrl
     });
   }
 
@@ -180,8 +185,8 @@ export const DataProvider = ({ children }) => {
                 duration: dbl.duration || existingLocal?.duration || '20 phút',
                 xp: dbl.xp || existingLocal?.xp || 50,
                 summary: dbl.summary || existingLocal?.summary || '',
-                videoUrl: dbl.videoUrl || existingLocal?.videoUrl || '',
-                documentUrl: dbl.documentUrl || existingLocal?.documentUrl || ''
+                videoUrl: dbl.videoUrl || existingLocal?.videoUrl || 'https://www.youtube.com/watch?v=yrnF4i3D33w',
+                documentUrl: dbl.documentUrl || existingLocal?.documentUrl || 'https://drive.google.com'
               });
             });
 
@@ -202,6 +207,17 @@ export const DataProvider = ({ children }) => {
             };
           });
           setCurriculum(merged);
+
+          // Tự động cập nhật bổ sung video_url và document_url mặc định lên Supabase DB cho bài học chưa có video
+          supabaseService.client
+            .from('lessons')
+            .update({ 
+              video_url: 'https://www.youtube.com/watch?v=yrnF4i3D33w',
+              document_url: 'https://drive.google.com' 
+            })
+            .or('video_url.is.null,video_url.eq.')
+            .then(() => {})
+            .catch(() => {});
 
           // Cập nhật tiêu đề Khối 6 chuẩn trên Supabase DB nếu cần
           supabaseService.client
