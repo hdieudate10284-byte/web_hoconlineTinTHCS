@@ -110,8 +110,7 @@ const AppData = {
       lessons: [
         { id: "l8-1", title: "Biểu hiện vi phạm khi sử dụng công nghệ kĩ thuật số.", duration: "20 phút", xp: 70 },
         { id: "l8-2", title: "Tuân thủ những quy định về đạo đức, văn hóa và pháp luật khi tạo ra sản phẫm số", duration: "20 phút", xp: 70 },
-        { id: "l8-3", title: "Phòng tránh Virus, Mã độc & Phần mềm độc hại", duration: "25 phút", xp: 80 },
-        { id: "l8-4", title: "An toàn khi sử dụng Wi-Fi công cộng", duration: "15 phút", xp: 60 }
+        { id: "l8-3", title: "Phần mềm thương mại vs Phần mềm nguồn mở", duration: "25 phút", xp: 80 }
       ],
       minigame: {
         id: "mg-8",
@@ -144,8 +143,7 @@ const AppData = {
       lessons: [
         { id: "l9-1", title: "Một số tác động tiêu cực của công nghệ số", duration: "25 phút", xp: 80 },
         { id: "l9-2", title: "Sử dụng dịch vụ internet đúng luật", duration: "20 phút", xp: 70 },
-        { id: "l9-3", title: "Mã hóa dữ liệu & An toàn lưu trữ Đám mây", duration: "25 phút", xp: 80 },
-        { id: "l9-4", title: "Trách nhiệm công dân trong kỷ nguyên số", duration: "20 phút", xp: 70 }
+        { id: "l9-3", title: "Pháp lý về mua bán, giao dịch & Sử dụng dịch vụ mạng", duration: "25 phút", xp: 80 }
       ],
       minigame: {
         id: "mg-9",

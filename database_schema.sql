@@ -67,23 +67,15 @@ CREATE TABLE IF NOT EXISTS public.lessons (
     duration VARCHAR(50) DEFAULT '20 phút',
     xp_reward INT DEFAULT 50 CHECK (xp_reward >= 0),
     summary TEXT,
-    content_body TEXT,
-<<<<<<< HEAD
-=======
     video_url TEXT,
     document_url TEXT,
->>>>>>> 3370f4b (Cập nhật hệ thống Web Học Online Tin THCS: Xây dựng file .gitignore chuẩn, cho phép Giáo viên đăng ký/đăng nhập Tên & Email riêng, phân quyền Admin ô Supabase DB và tự động đồng bộ bài giảng mới lên Cloud Database)
     display_order INT DEFAULT 1,
     created_at TIMESTAMPTZ DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
-<<<<<<< HEAD
-=======
 -- Bổ sung cột nếu đã tạo bảng trước đó:
 ALTER TABLE public.lessons ADD COLUMN IF NOT EXISTS video_url TEXT;
 ALTER TABLE public.lessons ADD COLUMN IF NOT EXISTS document_url TEXT;
-
->>>>>>> 3370f4b (Cập nhật hệ thống Web Học Online Tin THCS: Xây dựng file .gitignore chuẩn, cho phép Giáo viên đăng ký/đăng nhập Tên & Email riêng, phân quyền Admin ô Supabase DB và tự động đồng bộ bài giảng mới lên Cloud Database)
 -- ============================================================================
 -- TẦNG 3: BẢNG MINIGAME TRẮC NGHIỆM GAMIFICATION (MINIGAMES & QUESTIONS)
 -- ============================================================================

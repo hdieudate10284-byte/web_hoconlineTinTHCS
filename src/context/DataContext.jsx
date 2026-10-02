@@ -26,7 +26,9 @@ const sanitizeLessons = (lessonsList) => {
     if (!l || !l.title) continue;
     const lower = l.title.trim().toLowerCase();
 
-    if (lower === 'bài 4' || lower.includes('kiểm chứng thông tin') || lower.includes('tin giả') || lower.includes('fake news')) {
+    if (lower === 'bài 4' || lower.includes('kiểm chứng thông tin') || lower.includes('tin giả') || lower.includes('fake news') ||
+        l.id === 'l8-4' || l.id === 'l9-4' ||
+        lower.includes('phòng tránh virus') || lower.includes('wi-fi công cộng') || lower.includes('mã hóa dữ liệu') || lower.includes('trách nhiệm công dân trong kỷ nguyên số')) {
       continue;
     }
 
@@ -45,12 +47,18 @@ const sanitizeLessons = (lessonsList) => {
     } else if (l.id === 'l8-2' || lower.includes('tạo lập mật khẩu') || lower.includes('tạo ra sản phẫm số') || lower.includes('tạo ra sản phẩm số') || lower.includes('tuân thủ những quy định')) {
       newTitle = 'Tuân thủ những quy định về đạo đức, văn hóa và pháp luật khi tạo ra sản phẫm số';
       newSummary = 'Nắm vững các quy định về đạo đức, văn hóa và pháp luật khi sáng tạo và chia sẻ sản phẩm số.';
+    } else if (l.id === 'l8-3' || lower.includes('phần mềm thương mại')) {
+      newTitle = 'Phần mềm thương mại vs Phần mềm nguồn mở';
+      newSummary = 'Phân biệt phần mềm thương mại và phần mềm nguồn mở, quy định về bản quyền và sử dụng hợp pháp.';
     } else if (l.id === 'l9-1' || lower.includes('luật an ninh mạng') || lower.includes('khái quát luật') || lower.includes('tác động tiêu cực')) {
       newTitle = 'Một số tác động tiêu cực của công nghệ số';
       newSummary = 'Nhận biết các tác động tiêu cực của công nghệ số đối với đời sống, sức khỏe và xã hội.';
     } else if (l.id === 'l9-2' || lower.includes('bảo vệ dữ liệu') || lower.includes('nghị định 13') || lower.includes('dịch vụ internet đúng luật') || lower.includes('dịch vị internet')) {
       newTitle = 'Sử dụng dịch vụ internet đúng luật';
       newSummary = 'Các quy định pháp luật và trách nhiệm công dân khi tham gia và sử dụng các dịch vụ Internet.';
+    } else if (l.id === 'l9-3' || lower.includes('pháp lý về mua bán') || lower.includes('giao dịch & sử dụng dịch vụ mạng')) {
+      newTitle = 'Pháp lý về mua bán, giao dịch & Sử dụng dịch vụ mạng';
+      newSummary = 'Các quy định pháp lý khi mua bán, giao dịch thương mại điện tử và sử dụng dịch vụ trên mạng xã hội.';
     }
 
     newTitle = newTitle.replace(/^mục\s*\d+\s*:\s*/i, '');

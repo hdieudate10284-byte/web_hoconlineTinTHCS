@@ -93,8 +93,7 @@ export const INITIAL_CURRICULUM = [
     lessons: [
       { id: "l8-1", title: "Biểu hiện vi phạm khi sử dụng công nghệ kĩ thuật số.", duration: "20 phút", xp: 70, summary: "Nhận biết các biểu hiện vi phạm đạo đức, pháp luật và văn hóa khi sử dụng công nghệ kỹ thuật số.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
       { id: "l8-2", title: "Tuân thủ những quy định về đạo đức, văn hóa và pháp luật khi tạo ra sản phẫm số", duration: "20 phút", xp: 70, summary: "Nắm vững các quy định về đạo đức, văn hóa và pháp luật khi sáng tạo và chia sẻ sản phẩm số.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l8-3", title: "Phòng tránh Virus, Mã độc & Phần mềm độc hại", duration: "25 phút", xp: 80, summary: "Cài đặt phần mềm diệt virus và không tải file từ các trang web không rõ nguồn gốc.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l8-4", title: "An toàn khi sử dụng Wi-Fi công cộng", duration: "15 phút", xp: 60, summary: "Tránh giao dịch quan trọng trên mạng Wi-Fi mở tại quán cà phê, nơi công cộng.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
+      { id: "l8-3", title: "Phần mềm thương mại vs Phần mềm nguồn mở", duration: "25 phút", xp: 80, summary: "Phân biệt phần mềm thương mại và phần mềm nguồn mở, quy định về bản quyền và sử dụng hợp pháp.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
     minigame: {
       id: "mg-8",
@@ -127,8 +126,7 @@ export const INITIAL_CURRICULUM = [
     lessons: [
       { id: "l9-1", title: "Một số tác động tiêu cực của công nghệ số", duration: "25 phút", xp: 80, summary: "Nhận biết các tác động tiêu cực của công nghệ số đối với đời sống, sức khỏe và xã hội.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
       { id: "l9-2", title: "Sử dụng dịch vụ internet đúng luật", duration: "20 phút", xp: 70, summary: "Các quy định pháp luật và trách nhiệm công dân khi tham gia và sử dụng các dịch vụ Internet.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l9-3", title: "Mã hóa dữ liệu & An toàn lưu trữ Đám mây", duration: "25 phút", xp: 80, summary: "Ứng dụng công nghệ mã hóa đầu cuối và sao lưu dữ liệu an toàn trên Google Drive / OneDrive.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" },
-      { id: "l9-4", title: "Trách nhiệm công dân trong kỷ nguyên số", duration: "20 phút", xp: 70, summary: "Xây dựng môi trường mạng lành mạnh, chia sẻ kiến thức tích cực cho cộng đồng.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
+      { id: "l9-3", title: "Pháp lý về mua bán, giao dịch & Sử dụng dịch vụ mạng", duration: "25 phút", xp: 80, summary: "Các quy định pháp lý khi mua bán, giao dịch thương mại điện tử và sử dụng dịch vụ trên mạng xã hội.", videoUrl: "https://www.youtube.com/watch?v=yrnF4i3D33w", documentUrl: "https://drive.google.com" }
     ],
     minigame: {
       id: "mg-9",
@@ -222,12 +220,10 @@ export const INITIAL_ANALYTICS_STATS = {
     "l7-4": { title: "Giấy phép Creative Commons (CC) phổ biến", grade: 7, views: 31 },
     "l8-1": { title: "Biểu hiện vi phạm khi sử dụng công nghệ kĩ thuật số.", grade: 8, views: 92 },
     "l8-2": { title: "Tuân thủ những quy định về đạo đức, văn hóa và pháp luật khi tạo ra sản phẫm số", grade: 8, views: 85 },
-    "l8-3": { title: "Phòng tránh Virus, Mã độc & Phần mềm độc hại", grade: 8, views: 67 },
-    "l8-4": { title: "An toàn khi sử dụng Wi-Fi công cộng", grade: 8, views: 44 },
+    "l8-3": { title: "Phần mềm thương mại vs Phần mềm nguồn mở", grade: 8, views: 67 },
     "l9-1": { title: "Một số tác động tiêu cực của công nghệ số", grade: 9, views: 78 },
     "l9-2": { title: "Sử dụng dịch vụ internet đúng luật", grade: 9, views: 65 },
-    "l9-3": { title: "Mã hóa dữ liệu & An toàn lưu trữ Đám mây", grade: 9, views: 52 },
-    "l9-4": { title: "Trách nhiệm công dân trong kỷ nguyên số", grade: 9, views: 41 }
+    "l9-3": { title: "Pháp lý về mua bán, giao dịch & Sử dụng dịch vụ mạng", grade: 9, views: 52 }
   },
   gameStats: {
     "mg-6": { title: "Minigame Khối 6: Thử thách Vệ sĩ An toàn số", grade: 6, views: 98 },
