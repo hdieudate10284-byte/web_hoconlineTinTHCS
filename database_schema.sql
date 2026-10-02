@@ -172,49 +172,65 @@ ALTER TABLE public.badges ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_badges ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.activity_logs ENABLE ROW LEVEL SECURITY;
 
--- Xóa Policy cũ nếu có
+-- Xóa và Tạo mới lại các Policy (Đảm bảo chạy lại 100% không bị lỗi Policy Already Exists)
 DROP POLICY IF EXISTS "Public Read Classes" ON public.classes;
-DROP POLICY IF EXISTS "Public Read Users" ON public.users;
-DROP POLICY IF EXISTS "Public Read Curriculum" ON public.curriculum_topics;
-DROP POLICY IF EXISTS "Public Read Lessons" ON public.lessons;
-DROP POLICY IF EXISTS "Public Insert Curriculum" ON public.curriculum_topics;
-DROP POLICY IF EXISTS "Public Update Curriculum" ON public.curriculum_topics;
-DROP POLICY IF EXISTS "Public Insert Lessons" ON public.lessons;
-DROP POLICY IF EXISTS "Public Update Lessons" ON public.lessons;
-DROP POLICY IF EXISTS "Public Read Minigames" ON public.minigames;
-DROP POLICY IF EXISTS "Public Read Questions" ON public.minigame_questions;
-DROP POLICY IF EXISTS "Public Read Submissions" ON public.submissions;
-DROP POLICY IF EXISTS "Public Read Badges" ON public.badges;
-DROP POLICY IF EXISTS "Public Read User Badges" ON public.user_badges;
-DROP POLICY IF EXISTS "Public Read Activity Logs" ON public.activity_logs;
-DROP POLICY IF EXISTS "Public Insert Submissions" ON public.submissions;
-DROP POLICY IF EXISTS "Public Update Submissions" ON public.submissions;
-DROP POLICY IF EXISTS "Public Insert Users" ON public.users;
-DROP POLICY IF EXISTS "Public Update Users" ON public.users;
-DROP POLICY IF EXISTS "Public Insert Activity Logs" ON public.activity_logs;
-DROP POLICY IF EXISTS "Public Insert User Badges" ON public.user_badges;
-
--- Tạo lại các Policy mới
 CREATE POLICY "Public Read Classes" ON public.classes FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Users" ON public.users;
 CREATE POLICY "Public Read Users" ON public.users FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Curriculum" ON public.curriculum_topics;
 CREATE POLICY "Public Read Curriculum" ON public.curriculum_topics FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Insert Curriculum" ON public.curriculum_topics;
 CREATE POLICY "Public Insert Curriculum" ON public.curriculum_topics FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public Update Curriculum" ON public.curriculum_topics;
 CREATE POLICY "Public Update Curriculum" ON public.curriculum_topics FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Public Read Lessons" ON public.lessons;
 CREATE POLICY "Public Read Lessons" ON public.lessons FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Insert Lessons" ON public.lessons;
 CREATE POLICY "Public Insert Lessons" ON public.lessons FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public Update Lessons" ON public.lessons;
 CREATE POLICY "Public Update Lessons" ON public.lessons FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Public Read Minigames" ON public.minigames;
 CREATE POLICY "Public Read Minigames" ON public.minigames FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Questions" ON public.minigame_questions;
 CREATE POLICY "Public Read Questions" ON public.minigame_questions FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Submissions" ON public.submissions;
 CREATE POLICY "Public Read Submissions" ON public.submissions FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Insert Submissions" ON public.submissions;
+CREATE POLICY "Public Insert Submissions" ON public.submissions FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public Update Submissions" ON public.submissions;
+CREATE POLICY "Public Update Submissions" ON public.submissions FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Public Read Badges" ON public.badges;
 CREATE POLICY "Public Read Badges" ON public.badges FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read User Badges" ON public.user_badges;
 CREATE POLICY "Public Read User Badges" ON public.user_badges FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Activity Logs" ON public.activity_logs;
 CREATE POLICY "Public Read Activity Logs" ON public.activity_logs FOR SELECT USING (true);
 
-CREATE POLICY "Public Insert Submissions" ON public.submissions FOR INSERT WITH CHECK (true);
-CREATE POLICY "Public Update Submissions" ON public.submissions FOR UPDATE USING (true);
+DROP POLICY IF EXISTS "Public Insert Users" ON public.users;
 CREATE POLICY "Public Insert Users" ON public.users FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public Update Users" ON public.users;
 CREATE POLICY "Public Update Users" ON public.users FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Public Insert Activity Logs" ON public.activity_logs;
 CREATE POLICY "Public Insert Activity Logs" ON public.activity_logs FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public Insert User Badges" ON public.user_badges;
 CREATE POLICY "Public Insert User Badges" ON public.user_badges FOR INSERT WITH CHECK (true);
 
 -- ============================================================================
