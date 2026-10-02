@@ -17,6 +17,8 @@ const DataContext = createContext();
 
 export const useData = () => useContext(DataContext);
 
+const CURRICULUM_VERSION = 'v2026.10.02_v4';
+
 const sanitizeLessons = (lessonsList) => {
   if (!Array.isArray(lessonsList)) return [];
   const result = [];
@@ -26,9 +28,10 @@ const sanitizeLessons = (lessonsList) => {
     if (!l || !l.title) continue;
     const lower = l.title.trim().toLowerCase();
 
+    // Loại bỏ bài 4 cũ (l8-4, l9-4) và các bài trùng không thuộc chương trình mới
     if (lower === 'bài 4' || lower.includes('kiểm chứng thông tin') || lower.includes('tin giả') || lower.includes('fake news') ||
         l.id === 'l8-4' || l.id === 'l9-4' ||
-        lower.includes('phòng tránh virus') || lower.includes('wi-fi công cộng') || lower.includes('mã hóa dữ liệu') || lower.includes('trách nhiệm công dân trong kỷ nguyên số')) {
+        lower.includes('wi-fi công cộng') || lower.includes('trách nhiệm công dân trong kỷ nguyên số')) {
       continue;
     }
 
@@ -47,7 +50,7 @@ const sanitizeLessons = (lessonsList) => {
     } else if (l.id === 'l8-2' || lower.includes('tạo lập mật khẩu') || lower.includes('tạo ra sản phẫm số') || lower.includes('tạo ra sản phẩm số') || lower.includes('tuân thủ những quy định')) {
       newTitle = 'Tuân thủ những quy định về đạo đức, văn hóa và pháp luật khi tạo ra sản phẫm số';
       newSummary = 'Nắm vững các quy định về đạo đức, văn hóa và pháp luật khi sáng tạo và chia sẻ sản phẩm số.';
-    } else if (l.id === 'l8-3' || lower.includes('phần mềm thương mại')) {
+    } else if (l.id === 'l8-3' || lower.includes('phần mềm thương mại') || lower.includes('phòng tránh virus')) {
       newTitle = 'Phần mềm thương mại vs Phần mềm nguồn mở';
       newSummary = 'Phân biệt phần mềm thương mại và phần mềm nguồn mở, quy định về bản quyền và sử dụng hợp pháp.';
     } else if (l.id === 'l9-1' || lower.includes('luật an ninh mạng') || lower.includes('khái quát luật') || lower.includes('tác động tiêu cực')) {
@@ -56,7 +59,7 @@ const sanitizeLessons = (lessonsList) => {
     } else if (l.id === 'l9-2' || lower.includes('bảo vệ dữ liệu') || lower.includes('nghị định 13') || lower.includes('dịch vụ internet đúng luật') || lower.includes('dịch vị internet')) {
       newTitle = 'Sử dụng dịch vụ internet đúng luật';
       newSummary = 'Các quy định pháp luật và trách nhiệm công dân khi tham gia và sử dụng các dịch vụ Internet.';
-    } else if (l.id === 'l9-3' || lower.includes('pháp lý về mua bán') || lower.includes('giao dịch & sử dụng dịch vụ mạng')) {
+    } else if (l.id === 'l9-3' || lower.includes('pháp lý về mua bán') || lower.includes('giao dịch & sử dụng dịch vụ mạng') || lower.includes('mã hóa dữ liệu')) {
       newTitle = 'Pháp lý về mua bán, giao dịch & Sử dụng dịch vụ mạng';
       newSummary = 'Các quy định pháp lý khi mua bán, giao dịch thương mại điện tử và sử dụng dịch vụ trên mạng xã hội.';
     }
@@ -86,6 +89,12 @@ const sanitizeLessons = (lessonsList) => {
 export const DataProvider = ({ children }) => {
   const [curriculum, setCurriculum] = useState(() => {
     try {
+      const savedVersion = localStorage.getItem('thcs_curriculum_version');
+      if (savedVersion !== CURRICULUM_VERSION) {
+        localStorage.removeItem('thcs_curriculum');
+        localStorage.setItem('thcs_curriculum_version', CURRICULUM_VERSION);
+        return INITIAL_CURRICULUM;
+      }
       const saved = localStorage.getItem('thcs_curriculum');
       if (saved) {
         const parsed = JSON.parse(saved);
